@@ -23,7 +23,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+<<<<<<< HEAD
+=======
 .pnpm-debug.log*
+>>>>>>> 915790d (Reinitialized project)
 
 # local env files
 .env*.local
@@ -33,4 +36,8 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+<<<<<<< HEAD
+next-env.d.ts
+=======
 # next-env.d.ts
+>>>>>>> 915790d (Reinitialized project)
