@@ -1,8 +1,8 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 const defaultTheme = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
   },
   typography: {
     fontFamily: 'var(--font-roboto)',
@@ -20,4 +20,4 @@ const defaultTheme = createTheme({
   },
 });
 
-export default defaultTheme;
+export default responsiveFontSizes(defaultTheme);
