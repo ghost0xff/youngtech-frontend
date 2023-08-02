@@ -4,7 +4,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import { Box } from "@mui/material";
 import { useState } from "react";
-import AvatarMenu from "./AvatarMenu";
+import AvatarMenu from "./AvatarMenu/AvatarMenu";
 import SideDrawer from "./Drawer/SideDrawer";
 import DrawerButton from "./Drawer/DrawerButton";
 import HorizontalLogo from "./Logo/HorizontalLogo";
