@@ -32,7 +32,7 @@ export default function AccountAvatar({
       }}
     >
       <Avatar alt={name} src={img} sx={{ width: imgWidth, height: imgHeight }}>
-        <Typography variant="subtitle1">{initials}</Typography>
+        <Typography>{initials}</Typography>
       </Avatar>
     </StyledBadge>
   );

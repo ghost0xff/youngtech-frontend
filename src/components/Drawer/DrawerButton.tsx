@@ -11,7 +11,7 @@ export default function DrawerButton({ toggleDrawer }: DrawerButtonProps) {
   return (
     <>
       <IconButton
-        color="inherit"
+        color="default"
         onClick={() => {
           toggleDrawer();
         }}

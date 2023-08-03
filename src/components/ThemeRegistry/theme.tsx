@@ -1,5 +1,6 @@
-import { LinkProps as MuiLinkProps } from "@mui/material";
+import { LinkProps as MuiLinkProps, PaletteMode } from "@mui/material";
 import { Theme, createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { deepmerge } from "@mui/utils";
 
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { forwardRef } from "react";
@@ -11,9 +12,6 @@ const LinkBehaviour = forwardRef<HTMLAnchorElement, NextLinkProps>(
 );
 
 const generalTheme = createTheme({
-  // palette: {
-  //   mode: "dark",
-  // },
   typography: {
     fontFamily: "var(--font-roboto)",
   },
@@ -54,9 +52,9 @@ const generalTheme = createTheme({
 const responsiveGeneralTheme = responsiveFontSizes(generalTheme);
 // this themes below can be visualized here -> https://zenoo.github.io/mui-theme-creator
 
-const lightTheme: Theme = createTheme(responsiveGeneralTheme, {
+const lightTheme: Theme = createTheme({
   palette: {
-    // mode: "light",
+    mode: "light",
     primary: {
       main: "#0D1117",
       contrastText: "#C8D1D8",
@@ -71,12 +69,16 @@ const lightTheme: Theme = createTheme(responsiveGeneralTheme, {
     text: {
       disabled: "#7e7e7e",
     },
+    background: {
+      default: "#F6F8FA",
+      paper: "#FFFFFF",
+    },
   },
   components: {
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: "#010508",
+          backgroundColor: "#F6F8FA",
         },
       },
     },
@@ -92,9 +94,9 @@ const lightTheme: Theme = createTheme(responsiveGeneralTheme, {
   },
 });
 
-const darkTheme: Theme = createTheme(responsiveGeneralTheme, {
+const darkTheme: Theme = createTheme({
   palette: {
-    // mode: "light",
+    mode: "dark",
     primary: {
       main: "#1F6EEA",
       contrastText: "#C8D1D8",
@@ -149,10 +151,9 @@ const darkTheme: Theme = createTheme(responsiveGeneralTheme, {
   },
 });
 
-// let FixedThemeChoice: "light" | "dark";
 export function getTheme(mode: "light" | "dark"): Theme {
   if (mode === "light") {
-    return lightTheme;
+    return deepmerge(responsiveGeneralTheme, lightTheme);
   }
-  return darkTheme;
+  return deepmerge(responsiveGeneralTheme, darkTheme);
 }

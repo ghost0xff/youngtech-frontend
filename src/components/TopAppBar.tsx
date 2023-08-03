@@ -2,7 +2,7 @@
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { useState } from "react";
 import AvatarMenu from "./AvatarMenu/AvatarMenu";
 import SideDrawer from "./Drawer/SideDrawer";
@@ -37,6 +37,7 @@ export default function TopAppBar() {
             <AvatarMenu></AvatarMenu>
           </Toolbar>
         </AppBar>
+        <Divider light />
       </Box>
     </>
   );

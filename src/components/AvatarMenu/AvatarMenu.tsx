@@ -1,6 +1,5 @@
 "use client";
 
-import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
@@ -10,25 +9,16 @@ import LoginIcon from "@mui/icons-material/Login";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import TranslateIcon from "@mui/icons-material/Translate";
 import Brightness3OutlinedIcon from "@mui/icons-material/Brightness3Outlined";
-import {
-  Avatar,
-  IconButton,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  MenuList,
-  Paper,
-  Divider,
-  ListItemText,
-  ListItemAvatar,
-  Typography,
-  paperClasses,
-} from "@mui/material";
+import { IconButton, Menu, MenuList, Divider } from "@mui/material";
 import { ReactNode, useState } from "react";
-import StyledBadge from "../AccountAvatar/StyledBadge";
 import AccountAvatar from "../AccountAvatar/AccountAvatar";
-import AvatarMenuOption, { AvMenuOptProps } from "./AvatarMenuOption";
 import AvatarMenuHeader from "./AvatarMenuHeader";
+import AvatarMenuLink, { AvMenuLinkProps } from "./AvatarMenuLink";
+import AvatarMenuInteractive, {
+  AvMenuInteracProps,
+} from "./AvatarMenuInteractive";
+import { AccountBoxOutlined } from "@mui/icons-material";
+import AvatarPreferenceMenu from "./AvatarPreferenceMenu";
 
 export default function AvatarMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -41,53 +31,6 @@ export default function AvatarMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  function getElems(options: AvMenuOptProps[]): ReactNode[] {
-    let elements: ReactNode[] = [];
-    for (let index = 0; index < options.length; index++) {
-      const option = options[index];
-      elements.push(
-        <AvatarMenuOption
-          key={option.label}
-          label={option.label}
-          icon={option.icon}
-          href={option.href}
-        />
-      );
-    }
-    return elements;
-  }
-
-  const accountOptions: AvMenuOptProps[] = [
-    { label: "Profile", icon: <AccountBoxOutlinedIcon />, href: "/" },
-    { label: "Switch Profile", icon: <SwitchAccountOutlinedIcon /> },
-    { label: "Sign out", icon: <LoginIcon />, href: "/" },
-  ];
-  const shoppingOptions: AvMenuOptProps[] = [
-    {
-      label: "Orders and Purchases",
-      icon: <ShoppingBagOutlinedIcon />,
-      href: "/ordersAndpurchases",
-    },
-  ];
-  const preferences: AvMenuOptProps[] = [
-    {
-      label: "Appearance: Dark theme",
-      icon: <Brightness3OutlinedIcon />,
-    },
-    {
-      label: "Language: English",
-      icon: <TranslateIcon />,
-    },
-  ];
-  const confOptions: AvMenuOptProps[] = [
-    { label: "Settings", icon: <SettingsOutlinedIcon />, href: "/" },
-  ];
-  const customerSupportOptions: AvMenuOptProps[] = [
-    { label: "Help", icon: <HelpOutlineIcon />, href: "/" },
-    { label: "Send Feedback", icon: <FeedbackOutlinedIcon />, href: "/" },
-  ];
-
   return (
     <>
       <IconButton
@@ -105,14 +48,6 @@ export default function AvatarMenu() {
         />
       </IconButton>
       <Menu
-        slotProps={{
-          paper: {
-            sx: {
-              borderRadius: "12px",
-            },
-          },
-        }}
-        // sx={{ borderRadius: "50%" }}
         transitionDuration={0}
         open={open}
         anchorEl={anchorEl}
@@ -130,15 +65,60 @@ export default function AvatarMenu() {
             email="samuelastuaflores@gmail.com"
           />
           <Divider />
-          {getElems(accountOptions)}
+          <AvatarMenuLink
+            href="/account"
+            icon={<AccountBoxOutlinedIcon />}
+            label="Your account"
+          />
+          <AvatarMenuInteractive
+            icon={<SwitchAccountOutlinedIcon />}
+            label="Switch account"
+          />
+          <AvatarMenuLink
+            href="/signout"
+            icon={<LoginIcon />}
+            label="Sign out"
+          />
           <Divider />
-          {getElems(shoppingOptions)}
+          <AvatarMenuLink
+            href="/orders"
+            icon={<ShoppingBagOutlinedIcon />}
+            label="Orders and purchases"
+          />
           <Divider />
-          {getElems(preferences)}
+          <AvatarMenuInteractive
+            icon={<Brightness3OutlinedIcon />}
+            label="Appearance: Device theme"
+          />
+          <AvatarMenuInteractive
+            // onClick={}
+            icon={<TranslateIcon />}
+            label="Language: English"
+            menu={
+              <AvatarPreferenceMenu
+                handleClose={handleClose}
+                anchorEl={null}
+                open={false}
+              ></AvatarPreferenceMenu>
+            }
+          />
           <Divider />
-          {getElems(confOptions)}
+          <AvatarMenuLink
+            href="/settings"
+            icon={<SettingsOutlinedIcon />}
+            label="Settings"
+          />
           <Divider />
-          {getElems(customerSupportOptions)}
+          <AvatarMenuInteractive
+            icon={<HelpOutlineIcon />}
+            label="Help"
+            showArrow={false}
+          />
+          <AvatarMenuInteractive
+            icon={<FeedbackOutlinedIcon />}
+            label="Send Feedback"
+            showArrow={false}
+          />
         </MenuList>
       </Menu>
     </>

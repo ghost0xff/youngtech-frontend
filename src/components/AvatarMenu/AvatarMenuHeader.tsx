@@ -29,7 +29,7 @@ export default function AvatarMenuHeader({
       </ListItemAvatar>
       <ListItemText
         primary={<Typography sx={{ fontWeight: 700 }}>{name}</Typography>}
-        secondary="samuelastuaflores@gmail.com"
+        secondary={email}
       />
     </MenuItem>
   );
