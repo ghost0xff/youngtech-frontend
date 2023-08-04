@@ -13,8 +13,8 @@ export default function ThemeRegistry({
 }) {
   // TODO: look for theme and store it in local storage
 
-  // const preferredTheme: Theme = getTheme("light");
-  const preferredTheme: Theme = getTheme("dark");
+  const preferredTheme: Theme = getTheme("light");
+  // const preferredTheme: Theme = getTheme("dark");
 
   return (
     <NextAppDirEmotionCacheProvider options={{ key: "mui" }}>

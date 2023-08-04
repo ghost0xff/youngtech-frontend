@@ -4,12 +4,13 @@ import { deepmerge } from "@mui/utils";
 
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { forwardRef } from "react";
+import LinkBehaviour from "./LinkBehaviour";
 
-const LinkBehaviour = forwardRef<HTMLAnchorElement, NextLinkProps>(
-  function LinkBehaviour(props, ref) {
-    return <NextLink ref={ref} {...props} />;
-  }
-);
+// const LinkBehaviour = forwardRef<HTMLAnchorElement, NextLinkProps>(
+//   function LinkBehaviour(props, ref) {
+//     return <NextLink ref={ref} {...props} />;
+//   }
+// );
 
 const generalTheme = createTheme({
   typography: {
@@ -37,10 +38,12 @@ const generalTheme = createTheme({
     },
     MuiMenu: {
       defaultProps: {
+        transitionDuration: 0,
         slotProps: {
           paper: {
             sx: {
               borderRadius: "12px",
+              minWidth: "315px",
             },
           },
         },

@@ -1,38 +1,49 @@
 "use client";
 
-import { Menu, MenuList, Divider } from "@mui/material";
+import {
+  MenuItem,
+  IconButton,
+  ListItemText,
+  Typography,
+  MenuList,
+  Divider,
+} from "@mui/material";
 import AvatarMenuLink from "./AvatarMenuLink";
+import { ReactNode } from "react";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
 type AvPrefProps = {
-  anchorEl: HTMLElement | null;
-  open: boolean;
-  children?: any;
-  handleClose(): void;
+  children?: ReactNode;
+  title: string;
+  onClick(): void;
 };
-
 export default function AvatarPreferenceMenu({
   children,
-  anchorEl,
-  open,
-  handleClose,
+  title,
+  onClick,
 }: AvPrefProps) {
   return (
-    <Menu
-      transitionDuration={0}
-      open={open}
-      anchorEl={anchorEl}
-      onClose={handleClose}
-      elevation={0}
-      transformOrigin={{ horizontal: "left", vertical: "top" }}
-      anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-    >
-      <MenuList>
-        <Divider />
-        <AvatarMenuLink href="/" label="English" />
-        <AvatarMenuLink href="/" label="Spanish" />
-        <AvatarMenuLink href="/" label="Dutch" />
-        {children}
-      </MenuList>
-    </Menu>
+    <MenuList>
+      <MenuItem
+        disableRipple
+        sx={{
+          py: "0",
+          ":hover": {
+            bgcolor: "inherit",
+          },
+        }}
+      >
+        <IconButton onClick={onClick}>
+          <ArrowBackOutlinedIcon />
+        </IconButton>
+        <ListItemText>
+          <Typography variant="subtitle1" pl={0.5}>
+            {title}
+          </Typography>
+        </ListItemText>
+      </MenuItem>
+      <Divider />
+      {children}
+    </MenuList>
   );
 }
