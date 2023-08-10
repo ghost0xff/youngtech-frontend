@@ -1,20 +1,27 @@
 "use client";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton } from "@mui/material";
+import { IconButton, Theme, useMediaQuery, useTheme } from "@mui/material";
 
 type DrawerButtonProps = {
-  toggleDrawer(): void;
+  onClick(): void;
 };
 
-export default function DrawerButton({ toggleDrawer }: DrawerButtonProps) {
+export default function DrawerButton({ onClick }: DrawerButtonProps) {
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
     <>
       <IconButton
+        edge="start"
         color="default"
-        onClick={() => {
-          toggleDrawer();
-        }}
+        onClick={onClick}
+        // sx={(theme: Theme => {
+        //   [theme.breakpoints.down("sm")]: {
+        //     p: 2,
+        //   },
+        // })
       >
         <MenuIcon />
       </IconButton>

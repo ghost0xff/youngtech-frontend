@@ -5,24 +5,70 @@ import { Theme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import NextAppDirEmotionCacheProvider from "./EmotionCache";
 import { getTheme } from "./theme";
+import { PaletteMode, useMediaQuery } from "@mui/material";
+import {
+  ThemePreference,
+  converteToPaletteMode,
+  getThemeFromStorage,
+  setThemeToStorage,
+} from "@/lib/themeUtils";
+import {
+  BreakfastDiningOutlined,
+  KeyboardReturnOutlined,
+} from "@mui/icons-material";
+import { dark } from "@mui/material/styles/createPalette";
+
+type ThemeChanger = {
+  toggleTheme: (preference: ThemePreference) => void;
+};
+
+export const ThemePreferenceContext = React.createContext<ThemeChanger>({
+  toggleTheme: () => {},
+});
 
 export default function ThemeRegistry({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // TODO: look for theme and store it in local storage
+  const [prefTheme, setPrefTheme] = React.useState<ThemePreference>(
+    getThemeFromStorage()
+  );
+  const [paletteMode, setPaletteMode] = React.useState<PaletteMode>("light");
+  const prefersDarkTheme = useMediaQuery("(prefers-color-scheme: dark)");
+  const themeChanger: ThemeChanger = React.useMemo(
+    () => ({
+      toggleTheme: (preference: ThemePreference) => {
+        setThemeToStorage(preference);
+        setPrefTheme(preference);
+      },
+    }),
+    []
+  );
 
-  const preferredTheme: Theme = getTheme("light");
+  React.useEffect(() => {
+    const storedTheme: ThemePreference = getThemeFromStorage();
+    const mode: PaletteMode = converteToPaletteMode(
+      storedTheme,
+      prefersDarkTheme
+    );
+    setPaletteMode(mode);
+    setPrefTheme(storedTheme);
+  }, [prefTheme]);
+
+  // const preferredTheme: Theme = getTheme("light");
   // const preferredTheme: Theme = getTheme("dark");
 
   return (
     <NextAppDirEmotionCacheProvider options={{ key: "mui" }}>
-      <ThemeProvider theme={preferredTheme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
+      <ThemePreferenceContext.Provider value={themeChanger}>
+        <ThemeProvider theme={getTheme("light")}>
+          {/* {"do i prefer dark theme? = " + String(prefersDarkTheme)} */}
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline enableColorScheme />
+          {children}
+        </ThemeProvider>
+      </ThemePreferenceContext.Provider>
     </NextAppDirEmotionCacheProvider>
   );
 }

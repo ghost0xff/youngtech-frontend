@@ -12,11 +12,53 @@ import LinkBehaviour from "./LinkBehaviour";
 //   }
 // );
 
+const lightScrollbarThumb: string = "#c1c1c1"; // === rgb(96, 96, 96)
+const lightScrollbarTrack: string = "transparent";
+
+const darkScrollbarThumb: string = "";
+const darkScrollbarTrack: string = "";
+
 const generalTheme = createTheme({
   typography: {
     fontFamily: "var(--font-roboto)",
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        ":root": {
+          scrollbarColor: `${lightScrollbarThumb} ${lightScrollbarTrack}`,
+          // scrollbarWidth: "none",
+          // scrollbarWidth: "thin",
+          // scrollbarWidth: 1,
+          "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
+            backgroundColor: lightScrollbarTrack,
+            width: 6,
+          },
+          "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
+            borderRadius: 50,
+            backgroundColor: lightScrollbarThumb,
+            minHeight: 5,
+            border: `0px solid ${lightScrollbarTrack}`,
+          },
+          "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus":
+            {
+              backgroundColor: lightScrollbarThumb,
+            },
+          "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active":
+            {
+              backgroundColor: lightScrollbarThumb,
+            },
+          "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover":
+            {
+              backgroundColor: lightScrollbarThumb,
+            },
+          "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
+            backgroundColor: lightScrollbarTrack,
+          },
+        },
+      },
+    },
+
     MuiAlert: {
       styleOverrides: {
         root: ({ ownerState }) => ({
@@ -43,7 +85,7 @@ const generalTheme = createTheme({
           paper: {
             sx: {
               borderRadius: "12px",
-              minWidth: "315px",
+              // minWidth: "315px",
             },
           },
         },
@@ -60,6 +102,8 @@ const lightTheme: Theme = createTheme({
     mode: "light",
     primary: {
       main: "#0D1117",
+      // main: "#0D1117",
+      // main: "#00011c",
       contrastText: "#C8D1D8",
     },
     secondary: {
@@ -74,6 +118,7 @@ const lightTheme: Theme = createTheme({
     },
     background: {
       default: "#F6F8FA",
+      // default: "#FFFFFF",
       paper: "#FFFFFF",
     },
   },
@@ -82,6 +127,7 @@ const lightTheme: Theme = createTheme({
       styleOverrides: {
         colorPrimary: {
           backgroundColor: "#F6F8FA",
+          // backgroundColor: "#FFFFFF",
         },
       },
     },
@@ -151,10 +197,46 @@ const darkTheme: Theme = createTheme({
         },
       },
     },
+    // TODO: Add this and config new colors so it looks pretty cool
+    // MuiCssBaseline: {
+    //   styleOverrides: {
+    //     ":root": {
+    //       scrollbarColor: `${lightScrollbarThumb} ${lightScrollbarTrack}`,
+    //       // scrollbarWidth: "none",
+    //       // scrollbarWidth: "thin",
+    //       // scrollbarWidth: 1,
+    //       "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
+    //         backgroundColor: lightScrollbarTrack,
+    //         width: 7,
+    //       },
+    //       "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
+    //         borderRadius: 50,
+    //         backgroundColor: lightScrollbarThumb,
+    //         minHeight: 5,
+    //         border: `0px solid ${lightScrollbarTrack}`,
+    //       },
+    //       "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus":
+    //         {
+    //           backgroundColor: lightScrollbarThumb,
+    //         },
+    //       "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active":
+    //         {
+    //           backgroundColor: lightScrollbarThumb,
+    //         },
+    //       "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover":
+    //         {
+    //           backgroundColor: lightScrollbarThumb,
+    //         },
+    //       "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
+    //         backgroundColor: lightScrollbarTrack,
+    //       },
+    //     },
+    //   },
+    // },
   },
 });
 
-export function getTheme(mode: "light" | "dark"): Theme {
+export function getTheme(mode: PaletteMode): Theme {
   if (mode === "light") {
     return deepmerge(responsiveGeneralTheme, lightTheme);
   }

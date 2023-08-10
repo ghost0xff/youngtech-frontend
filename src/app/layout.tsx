@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Roboto } from "next/font/google";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import TopAppBar from "@/components/TopAppBar";
+import TopAppBar from "@/components/TopAppBar/TopAppBar";
+import ContentContainer from "@/components/ContentContainer";
 const roboto = Roboto({
   variable: "--font-roboto",
   weight: ["300", "400", "500", "700"],
@@ -18,7 +19,7 @@ export default function RootLayout({
       <body className={roboto.className}>
         <ThemeRegistry>
           <TopAppBar />
-          {children}
+          <ContentContainer>{children}</ContentContainer>
         </ThemeRegistry>
       </body>
     </html>

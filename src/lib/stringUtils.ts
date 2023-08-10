@@ -16,3 +16,12 @@ export function getInitials(fullname: string): string {
     }
     return initials;
 }
+
+export function withFirstUpperCase(someString: string) {
+    if(someString.length <= 0) {
+        return someString;
+    }
+    const firstButUpper = someString.charAt(0).toUpperCase();
+    return someString.replace(someString.charAt(0), firstButUpper);
+}
+

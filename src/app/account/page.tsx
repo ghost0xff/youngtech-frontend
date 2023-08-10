@@ -1,3 +1,3 @@
 export default function ProfilePag() {
-  return <p>lol :'v</p>;
+  return <p>account papu lol :'v</p>;
 }

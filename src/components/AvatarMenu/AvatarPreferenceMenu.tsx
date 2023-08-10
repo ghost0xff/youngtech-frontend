@@ -9,31 +9,21 @@ import {
   Divider,
 } from "@mui/material";
 import AvatarMenuLink from "./AvatarMenuLink";
-import { ReactNode } from "react";
+import { ReactNode, useContext } from "react";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
+import { AvatarMenuOption, AvatarMenuReturnerContext } from "./AvatarMenu";
+import UnanimatedMenuItem from "../utils/UnanimatedMenuItem";
 
 type AvPrefProps = {
   children?: ReactNode;
   title: string;
-  onClick(): void;
 };
-export default function AvatarPreferenceMenu({
-  children,
-  title,
-  onClick,
-}: AvPrefProps) {
+export default function AvatarPreferenceMenu({ children, title }: AvPrefProps) {
+  const menuReturner: MenuReturner = useContext(AvatarMenuReturnerContext);
   return (
     <MenuList>
-      <MenuItem
-        disableRipple
-        sx={{
-          py: "0",
-          ":hover": {
-            bgcolor: "inherit",
-          },
-        }}
-      >
-        <IconButton onClick={onClick}>
+      <UnanimatedMenuItem>
+        <IconButton onClick={menuReturner.return}>
           <ArrowBackOutlinedIcon />
         </IconButton>
         <ListItemText>
@@ -41,7 +31,7 @@ export default function AvatarPreferenceMenu({
             {title}
           </Typography>
         </ListItemText>
-      </MenuItem>
+      </UnanimatedMenuItem>
       <Divider />
       {children}
     </MenuList>
