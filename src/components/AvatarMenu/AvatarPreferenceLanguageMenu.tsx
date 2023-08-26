@@ -4,21 +4,21 @@ import AvatarPreferenceMenu from "./AvatarPreferenceMenu";
 import { AvatarMenuOption } from "./AvatarMenu";
 
 export default function AvatarPreferenceLanguageMenu() {
-  // TODO: actuallu ADD i18n
-  const selectedLanguage: string = "EN";
+  // TODO: actually ADD i18n
+  const selectedLanguage: string = "ES";
   return (
-    <AvatarPreferenceMenu title="Choose your location">
+    <AvatarPreferenceMenu title="Selecciona tu idioma">
       <MenuItem>
+        <ListItemIcon>
+          {selectedLanguage === "ES" && <CheckOutlinedIcon />}
+        </ListItemIcon>
+        <Typography variant="body1">Español</Typography>
+      </MenuItem>
+      <MenuItem disabled>
         <ListItemIcon>
           {selectedLanguage === "EN" && <CheckOutlinedIcon />}
         </ListItemIcon>
         <Typography variant="body1">English</Typography>
-      </MenuItem>
-      <MenuItem disabled>
-        <ListItemIcon>
-          {selectedLanguage === "ES" && <CheckOutlinedIcon />}
-        </ListItemIcon>
-        <Typography variant="body1">Spanish</Typography>
       </MenuItem>
     </AvatarPreferenceMenu>
   );

@@ -48,7 +48,7 @@ export default function AvatarMenuHeader({
   return (
     <UnanimatedMenuItem>
       <ListItemAvatar>
-        <AccountAvatar name={name} imgHeight={40} imgWidth={40} />
+        <AccountAvatar name={name} img={img} imgHeight={40} imgWidth={40} />
       </ListItemAvatar>
       <ListItemText
         primary={

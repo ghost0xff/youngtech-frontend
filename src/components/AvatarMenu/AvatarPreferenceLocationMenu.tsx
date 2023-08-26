@@ -6,9 +6,9 @@ import AvatarPreferenceMenu from "./AvatarPreferenceMenu";
 import { useState } from "react";
 
 export default function AvatarPreferenceLocationMenu() {
-  const [location, setLocation] = useState<"CR" | "USA">("CR");
+  const [location, setLocation] = useState<"CR" | "USA" | "NI" | "PA">("CR");
   return (
-    <AvatarPreferenceMenu title="Choose your location">
+    <AvatarPreferenceMenu title="Selecciona tu ubicación">
       <MenuItem>
         <ListItemIcon>
           {location === "CR" && <CheckOutlinedIcon />}
@@ -17,9 +17,21 @@ export default function AvatarPreferenceLocationMenu() {
       </MenuItem>
       <MenuItem disabled>
         <ListItemIcon>
+          {location === "NI" && <CheckOutlinedIcon />}
+        </ListItemIcon>
+        <Typography variant="body1">Nicaragua</Typography>
+      </MenuItem>
+      <MenuItem disabled>
+        <ListItemIcon>
+          {location === "PA" && <CheckOutlinedIcon />}
+        </ListItemIcon>
+        <Typography variant="body1">Panamá</Typography>
+      </MenuItem>
+      <MenuItem disabled>
+        <ListItemIcon>
           {location === "USA" && <CheckOutlinedIcon />}
         </ListItemIcon>
-        <Typography variant="body1">United Stated</Typography>
+        <Typography variant="body1">Estados Unidos</Typography>
       </MenuItem>
     </AvatarPreferenceMenu>
   );

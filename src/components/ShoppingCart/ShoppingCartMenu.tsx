@@ -16,8 +16,8 @@ export const CartMenuDestroyerContext = createContext<MenuDestroyer>({
 export default function ShoppingCartMenu() {
   const [anchorEl, setAchorEl] = useState<null | HTMLElement>(null);
 
-  const [products, setProducts] = useState<Product[]>(mockProducts);
-  // const [products, setProducts] = useState<Product[]>([]);
+  // const [products, setProducts] = useState<Product[]>(mockProducts);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const numberItems = products.length;
   const empty: boolean = numberItems <= 0;
@@ -43,13 +43,14 @@ export default function ShoppingCartMenu() {
     <>
       <Tooltip
         title={
-          empty ? "Looking kinda empty over here :(" : "Ready to checkout?"
+          // empty ? "Looking kinda empty over here :(" : "Ready to checkout?"
+          empty ? "Un poco vacío por aquí :(" : "¿List@ para pagar?"
         }
       >
         <IconButton
           size="small"
           onClick={handleClick}
-          sx={{ ml: 2 }}
+          // sx={{ ml: 2 }}
           aria-controls={open ? "shopping-cart-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}

@@ -54,7 +54,7 @@ export default function SideDrawer({ isOpen, toggleDrawer }: SideDrawerProps) {
           },
         }}
       >
-        {isKindaBig ? (
+        {/* {isKindaBig ? (
           <Drawer
             elevation={0}
             // variant="permanent"
@@ -76,35 +76,36 @@ export default function SideDrawer({ isOpen, toggleDrawer }: SideDrawerProps) {
               <Typography>lul</Typography>
             </Box>
           </Drawer>
-        ) : (
-          <SwipeableDrawer
-            transitionDuration={180}
-            anchor="left"
-            open={isOpen}
-            onClose={toggleDrawer}
-            onOpen={toggleDrawer}
-            variant="temporary"
-            elevation={0}
-            sx={{
-              display: { xs: "block", md: "none" },
-              "& .MuiDrawer-paper": {
-                boxSizing: "border-box",
-                width: drawerWidth,
-                borderTopRightRadius: "12px",
-                borderBottomRightRadius: "12px",
-              },
-            }}
-            ModalProps={{
-              keepMounted: true,
-            }}
-            PaperProps={{
-              square: false,
-              variant: "outlined",
-            }}
-          >
-            {drawerContent}
-          </SwipeableDrawer>
-        )}
+        ) : ( */}
+        <SwipeableDrawer
+          transitionDuration={180}
+          // transitionDuration={0}
+          anchor="left"
+          open={isOpen}
+          onClose={toggleDrawer}
+          onOpen={toggleDrawer}
+          variant="temporary"
+          elevation={0}
+          sx={{
+            display: { xs: "block", md: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+              borderTopRightRadius: "12px",
+              borderBottomRightRadius: "12px",
+            },
+          }}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          PaperProps={{
+            square: false,
+            variant: "outlined",
+          }}
+        >
+          {drawerContent}
+        </SwipeableDrawer>
+        {/* )} */}
       </Box>
     </>
   );

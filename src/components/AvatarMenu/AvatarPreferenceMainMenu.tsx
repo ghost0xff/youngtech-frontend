@@ -16,7 +16,7 @@ import { MenuList, Divider } from "@mui/material";
 import { AvatarMenuOption } from "./AvatarMenu";
 import { ThemePreference, getThemeFromStorage } from "@/lib/themeUtils";
 import { useState } from "react";
-import { withFirstUpperCase } from "@/lib/stringUtils";
+import { signOut, useSession } from "next-auth/react";
 
 type AvPrefMainMenuProps = {
   onChangeMenu(option: AvatarMenuOption): void;
@@ -28,13 +28,28 @@ export default function AvatarPreferenceMainMenu({
   const [selectedTheme, setSelectedTheme] = useState<ThemePreference>(
     getThemeFromStorage()
   );
+  const { data: session } = useSession();
+
+  // temporary till I add i18n
+  const textTheme = (theme: ThemePreference): string => {
+    let word: "Claro" | "Oscuro" | "del Dispositivo" = "Claro";
+    if (theme == "light") {
+      word = "Claro";
+    } else if (theme == "dark") {
+      word = "Oscuro";
+    } else if (theme == "device") {
+      word = "del Dispositivo";
+    }
+    return word;
+  };
 
   return (
     <MenuList>
       {/* Header with account info*/}
       <AvatarMenuHeader
-        name="Samuel Astua Flores"
-        email="samuelastuaflores@gmail.com"
+        name={session?.user?.name as string}
+        email={session?.user?.email as string}
+        img={session?.user?.image as string}
       />
       <Divider />
 
@@ -42,40 +57,44 @@ export default function AvatarPreferenceMainMenu({
       <AvatarMenuLink
         href="/account"
         icon={<AccountBoxOutlinedIcon />}
-        label="Your account"
+        label="Tu cuenta"
       />
-      <AvatarMenuInteractive
-        icon={<SwitchAccountOutlinedIcon />}
-        label="Switch account"
-        showArrow
-      />
-      <AvatarMenuLink href="/signout" icon={<LoginIcon />} label="Sign out" />
-
-      {/* money my friend, money $$$$ */}
-      <Divider />
       <AvatarMenuLink
         href="/orders"
         icon={<ShoppingBagOutlinedIcon />}
-        label="Orders and purchases"
+        label="Ordenes y compras"
       />
+      <AvatarMenuInteractive
+        icon={<SwitchAccountOutlinedIcon />}
+        label="Cambiar de cuenta"
+        showArrow
+      />
+
+      <AvatarMenuInteractive
+        onClick={() => signOut()}
+        icon={<LoginIcon />}
+        label="Salir"
+      />
+
+      {/* money my friend, money $$$$ */}
       <Divider />
 
       {/* Preferences */}
       <AvatarMenuInteractive
         icon={<Brightness3OutlinedIcon />}
-        label={`Appearance: ${withFirstUpperCase(selectedTheme)} theme`}
+        label={`Apariencia: ${textTheme(selectedTheme)}`}
         onClick={() => onChangeMenu("theme")}
         showArrow
       />
       <AvatarMenuInteractive
         icon={<TranslateIcon />}
-        label="Language: English"
+        label="Lenguaje: Español"
         onClick={() => onChangeMenu("language")}
         showArrow
       />
       <AvatarMenuInteractive
         icon={<LanguageOutlinedIcon />}
-        label="Location: Costa Rica"
+        label="Ubicación: Costa Rica"
         onClick={() => onChangeMenu("location")}
         showArrow
       />
@@ -85,20 +104,19 @@ export default function AvatarPreferenceMainMenu({
       <AvatarMenuLink
         href="/settings"
         icon={<SettingsOutlinedIcon />}
-        label="Settings"
+        label="Configuración"
       />
-      <Divider />
 
       {/* Customer Service */}
       <AvatarMenuInteractive
         icon={<HelpOutlineIcon />}
-        label="Help"
-        showArrow
+        label="Ayuda"
+        // showArrow
       />
       <AvatarMenuInteractive
         icon={<FeedbackOutlinedIcon />}
-        label="Send Feedback"
-        showArrow
+        label="Enviar comentarios"
+        // showArrow
       />
     </MenuList>
   );

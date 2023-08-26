@@ -7,6 +7,7 @@ import AvatarPreferenceThemeMenu from "./AvatarPreferenceThemeMenu";
 import AvatarPreferenceMainMenu from "./AvatarPreferenceMainMenu";
 import AvatarPreferenceLanguageMenu from "./AvatarPreferenceLanguageMenu";
 import AvatarPreferenceLocationMenu from "./AvatarPreferenceLocationMenu";
+import { useSession } from "next-auth/react";
 
 export type AvatarMenuOption = "main" | "theme" | "language" | "location";
 
@@ -22,6 +23,7 @@ export default function AvatarMenu() {
   const [anchorEl, setAchorEl] = useState<null | HTMLElement>(null);
   const [menu, setMenu] = useState<AvatarMenuOption>("main");
   const open = Boolean(anchorEl);
+  const { data: session } = useSession();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAchorEl(event.currentTarget);
@@ -66,7 +68,8 @@ export default function AvatarMenu() {
         aria-expanded={open ? "true" : undefined}
       >
         <AccountAvatar
-          name="Samuel Astua Flores"
+          name={session?.user?.name as string}
+          img={session?.user?.image as string}
           imgWidth={33}
           imgHeight={33}
         />

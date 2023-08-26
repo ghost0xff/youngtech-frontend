@@ -25,7 +25,8 @@ export default function EmptyShoppingCartMenuList() {
           sx={{ p: 2 }}
           primary={
             <Typography sx={{ color: "text.disabled" }} textAlign="center">
-              Your cart is empty.
+              {/* Your cart is empty. */}
+              Tu carrito está vacío
             </Typography>
           }
           secondary={
@@ -44,7 +45,8 @@ export default function EmptyShoppingCartMenuList() {
                   color: "secondary.main",
                 }}
               >
-                Keep Shopping
+                {/* Keep Shopping */}
+                Sigue Comprando
               </Typography>
             </Link>
           }
