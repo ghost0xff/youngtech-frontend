@@ -1,6 +1,6 @@
 "use client";
 
-import { getInitials } from "@/lib/stringUtils";
+import { getInitials } from "@/lib/utils/stringUtils";
 import {
   MenuItem,
   ListItemAvatar,
@@ -28,8 +28,6 @@ export default function AvatarMenuHeader({
 }: AvatarMenuHeaderProps) {
   // const [copied, setCopied] = useState(false);
   const [tooltipText, setTooltipText] = useState("Click to copy me!");
-
-  const initials = getInitials(name);
 
   async function handleClick(option: CopyOption) {
     const toBeCopied = option === "email" ? email : name;

@@ -3,7 +3,7 @@ import { Roboto } from "next/font/google";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import TopAppBar from "@/components/TopAppBar/TopAppBar";
 import ContentContainer from "@/components/ContentContainer";
-import AuthProvider from "@/components/auth/AuthProvider";
+import AuthProvider from "@/components/Auth/AuthProvider";
 const roboto = Roboto({
   variable: "--font-roboto",
   weight: ["300", "400", "500", "700"],

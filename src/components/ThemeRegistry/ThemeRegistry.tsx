@@ -11,7 +11,7 @@ import {
   converteToPaletteMode,
   getThemeFromStorage,
   setThemeToStorage,
-} from "@/lib/themeUtils";
+} from "@/lib/utils/themeUtils";
 import {
   BreakfastDiningOutlined,
   KeyboardReturnOutlined,

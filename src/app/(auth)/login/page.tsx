@@ -1,6 +1,6 @@
-import LoginFooter from "@/components/LoginFooter/LoginFooter";
 import ContinueGoogleButton from "@/components/LoginForm/ContinueGoogleButton";
 import SignUpAgreementLink from "@/components/LoginForm/SignUpAgreementLink";
+import SimpleFooter from "@/components/SimpleFooter/SimpleFooter";
 import {
   Card,
   CardActions,
@@ -51,11 +51,11 @@ export default function LoginPage() {
                   <ContinueGoogleButton />
                 </Stack>
                 <Typography variant="caption" color="text.disabled">
-                  Al registrarse, acepta los{" "}
+                  Al registrarse, acepta los
                   <SignUpAgreementLink
-                    text="Términos de servicio "
+                    text="Términos de servicio"
                     href="/tos"
-                  />
+                  />{" "}
                   y la{" "}
                   <SignUpAgreementLink
                     text="Política de privacidad"
@@ -72,8 +72,7 @@ export default function LoginPage() {
             </Card>
           </Grid>
         </Grid>
-
-        <LoginFooter />
+        <SimpleFooter />
       </Container>
     </>
   );

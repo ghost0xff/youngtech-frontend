@@ -14,7 +14,7 @@ import AvatarMenuLink from "./AvatarMenuLink";
 import AvatarMenuInteractive from "./AvatarMenuInteractive";
 import { MenuList, Divider } from "@mui/material";
 import { AvatarMenuOption } from "./AvatarMenu";
-import { ThemePreference, getThemeFromStorage } from "@/lib/themeUtils";
+import { ThemePreference, getThemeFromStorage } from "@/lib/utils/themeUtils";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 
@@ -71,7 +71,7 @@ export default function AvatarPreferenceMainMenu({
       />
 
       <AvatarMenuInteractive
-        onClick={() => signOut()}
+        onClick={() => signOut({ callbackUrl: "/" })}
         icon={<LoginIcon />}
         label="Salir"
       />

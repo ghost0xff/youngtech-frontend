@@ -1,5 +1,6 @@
 
 export function getInitials(fullname: string): string {
+    if(!fullname) return ':\'v';
     if(fullname.length <= 0) return ":'v"; 
     const names = fullname.split(' ');
     const firsts: string[] = [];
@@ -25,3 +26,12 @@ export function withFirstUpperCase(someString: string) {
     return someString.replace(someString.charAt(0), firstButUpper);
 }
 
+
+export function str(elements: string[]): string{
+    let rs = "";
+    for (let index = 0; index < elements.length; index++) {
+        const element = elements[index];
+        rs += element.concat(" ");
+    }
+    return rs;
+}

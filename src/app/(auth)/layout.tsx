@@ -3,8 +3,9 @@ import { Roboto } from "next/font/google";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import TopAppBar from "@/components/TopAppBar/TopAppBar";
 import ContentContainer from "@/components/ContentContainer";
-import AuthProvider from "@/components/auth/AuthProvider";
+import AuthProvider from "@/components/Auth/AuthProvider";
 import { Typography } from "@mui/material";
+import SimpleFooter from "@/components/SimpleFooter/SimpleFooter";
 const roboto = Roboto({
   variable: "--font-roboto",
   weight: ["300", "400", "500", "700"],
@@ -20,10 +21,7 @@ export default function RootLayout({
     <html lang="en" className={roboto.variable}>
       <body className={roboto.className}>
         <ThemeRegistry>
-          <AuthProvider>
-            {/* <TopAppBar /> */}
-            {children}
-          </AuthProvider>
+          <AuthProvider>{children}</AuthProvider>
         </ThemeRegistry>
       </body>
     </html>

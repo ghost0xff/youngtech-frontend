@@ -11,7 +11,7 @@ import {
   ListSubheader,
   MenuList,
 } from "@mui/material";
-import { ThemePreference, getThemeFromStorage } from "@/lib/themeUtils";
+import { ThemePreference, getThemeFromStorage } from "@/lib/utils/themeUtils";
 
 export default function AvatarPreferenceThemeMenu() {
   const themeChanger = useContext(ThemePreferenceContext);

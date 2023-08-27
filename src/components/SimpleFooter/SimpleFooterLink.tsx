@@ -8,7 +8,7 @@ export type LoginFooterLinkProps = {
   notLink?: boolean;
 };
 
-export default function LoginFooterLink({
+export default function SimpleFooterLink({
   label,
   href,
   notLink,

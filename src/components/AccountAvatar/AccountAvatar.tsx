@@ -1,5 +1,5 @@
 "use client";
-import { getInitials } from "@/lib/stringUtils";
+import { getInitials } from "@/lib/utils/stringUtils";
 import StyledBadge from "./StyledBadge";
 import { Typography, Avatar, Badge } from "@mui/material";
 

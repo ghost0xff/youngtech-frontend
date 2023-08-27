@@ -8,8 +8,8 @@ export default function ContinueGoogleButton() {
     <>
       <Button
         disableElevation
-        // color="primary"
-        color="inherit"
+        color="primary"
+        // color="inherit"
         variant="contained"
         onClick={() => signIn("google", { callbackUrl: "/" })}
         startIcon={

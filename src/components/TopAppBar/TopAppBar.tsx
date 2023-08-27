@@ -7,6 +7,7 @@ import {
   Button,
   Divider,
   IconButton,
+  Skeleton,
   Stack,
   Theme,
   Typography,
@@ -22,6 +23,7 @@ import HorizontalLogo from "../Logo/HorizontalLogo";
 import ShoppingCartMenu from "../ShoppingCart/ShoppingCartMenu";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { useSession, signIn } from "next-auth/react";
+import { AuthLoader } from "../Auth/AuthLoader";
 
 export default function TopAppBar() {
   const theme = useTheme();
@@ -57,24 +59,42 @@ export default function TopAppBar() {
               <HorizontalLogo />
             </Box>
             <Stack direction="row" spacing={2}>
-              <ShoppingCartMenu />
-              {session ? (
+              <AuthLoader
+                loader={
+                  <>
+                    <Skeleton
+                      variant="circular"
+                      width={33}
+                      height={33}
+                      animation={false}
+                    />
+                    <Skeleton
+                      variant="circular"
+                      width={33}
+                      height={33}
+                      animation={false}
+                    />
+                  </>
+                }
+                onUnAuthenticated={
+                  <Box>
+                    <Button
+                      sx={{
+                        borderRadius: "40px",
+                      }}
+                      color="secondary"
+                      startIcon={<AccountCircleOutlinedIcon />}
+                      variant="outlined"
+                      onClick={() => signIn()}
+                    >
+                      Sign in
+                    </Button>
+                  </Box>
+                }
+              >
+                <ShoppingCartMenu />
                 <AvatarMenu />
-              ) : (
-                <Box>
-                  <Button
-                    sx={{
-                      borderRadius: "40px",
-                    }}
-                    color="secondary"
-                    startIcon={<AccountCircleOutlinedIcon />}
-                    variant="outlined"
-                    onClick={() => signIn()}
-                  >
-                    Sign in
-                  </Button>
-                </Box>
-              )}
+              </AuthLoader>
             </Stack>{" "}
           </Toolbar>
 

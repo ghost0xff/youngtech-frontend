@@ -1,8 +1,8 @@
 import { Link, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import LoginFooterLink, { LoginFooterLinkProps } from "./LoginFooterLink";
+import SimpleFooterLink, { LoginFooterLinkProps } from "./SimpleFooterLink";
 
-export default function LoginFooter() {
+export default function SimpleFooter() {
   return (
     <>
       <Grid
@@ -13,7 +13,11 @@ export default function LoginFooter() {
         justifyContent="center"
       >
         {links.map((link) => (
-          <LoginFooterLink href={link.href} label={link.label} />
+          <SimpleFooterLink
+            href={link.href}
+            label={link.label}
+            key={link.label}
+          />
         ))}
       </Grid>
     </>
