@@ -7,6 +7,22 @@ type Param = {
     value: string
 }
 
+export function apiClientId() {
+    const clientId = process.env.API_CLIENT_ID;
+    if (!clientId) {
+        throw new Error("client_id or client_secret not declared on .env file");
+    }
+    return clientId;
+}
+
+export function apiClientSecret() {
+    const clientSecret = process.env.API_CLIENT_SECRET;
+    if (!clientSecret) {
+        throw new Error("client_id or client_secret not declared on .env file");
+    }
+    return clientSecret;
+}
+
 export default function fromApi(fromUrl: string): string {
     const fromApiUrl: string= process.env.API_URL as string;
     const slash = "/";

@@ -12,7 +12,11 @@ export default function Random() {
         loader={<p>Loader..</p>}
         onUnAuthenticated={<p>Sorry not authed</p>}
       >
-        <p>Your name is {session?.user.user?.name}</p>
+        <p>Your id is {session?.user.id}</p>
+        <p>Your name is {session?.user.name}</p>
+        <p>Your email is {session?.user.email}</p>
+        <p>Your accessToken is {session?.user.accessToken}</p>
+        <p>Your refreshToken is {session?.user.refreshToken}</p>
         <span>My roles: </span>
         {session?.user.roles.map((role) => (
           <span>{role},</span>

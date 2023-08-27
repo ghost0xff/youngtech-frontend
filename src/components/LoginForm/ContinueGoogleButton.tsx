@@ -2,6 +2,7 @@
 
 import { Button, SvgIcon } from "@mui/material";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function ContinueGoogleButton() {
   return (

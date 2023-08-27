@@ -12,6 +12,9 @@ export default withAuth(
         const path: string = req.nextUrl.pathname
         const roles = req.nextauth.token?.roles;
 
+        console.log(`jwt access token from middleware => ${req.nextauth.token?.accessToken}`)
+        console.log(`jwt refresh token from middleware => ${req.nextauth.token?.refreshToken}`)
+
         if(
             path.startsWith("/dashboard")
             && !roles?.includes("ROLE_ADMIN")

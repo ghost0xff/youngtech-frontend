@@ -1,4 +1,4 @@
-import NextAuth, {DefaultSession, DefaultUser} from "next-auth"
+import NextAuth, {DefaultSession, DefaultUser, Account as DefaultAccount} from "next-auth"
 import { JWT, DefaultJWT } from 'next-auth/jwt';
 
 declare module "next-auth" {
@@ -6,29 +6,31 @@ declare module "next-auth" {
    * Returned by `useSession`, `getSession` and received as a prop on the `Provider` React Context
    */
   interface Session {
-    user: {
-      roles: string[]
-    }
-    & DefaultSession
+    user: User,
+    error?: "RefreshAccessTokenError"
   }
 
   interface User extends DefaultUser {
-      roles: string[]
-  }
+      roles: string[],
+      accessToken: string
+      refreshToken: string,
+   }
+
+   interface Account extends DefaultAccount {
+      expires_in: number
+   } 
   
-  /** The OAuth profile returned from your provider */
-  interface Profile {
-    roles: string[]
-  }
 
 }
 declare module "next-auth/jwt" {
     /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
-    interface JWT extends DefaultJWT {
-      /** OpenID ID Token */
-        idToken: string
+    interface JWT {
+        expiresAt: number
         accessToken: string
-        roles: string[]
+        refreshToken: string,
+        roles: string[],
+        error?: "RefreshAccessTokenError"
+        
 
     }
   }
