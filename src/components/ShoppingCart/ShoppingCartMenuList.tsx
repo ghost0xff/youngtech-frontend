@@ -12,7 +12,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import UnanimatedMenuItem from "../utils/UnanimatedMenuItem";
+import UnanimatedMenuItem from "../helpers/UnanimatedMenuItem";
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import { CartMenuDestroyerContext } from "./ShoppingCartMenu";
 import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCartOutlined";

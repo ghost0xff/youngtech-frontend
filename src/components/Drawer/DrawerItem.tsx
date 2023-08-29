@@ -7,7 +7,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { ReactNode } from "react";
-import UnstyledLink from "../utils/UnstyledLink";
+import UnstyledLink from "../helpers/UnstyledLink";
 
 type DrawerItemProps = {
   open: boolean;

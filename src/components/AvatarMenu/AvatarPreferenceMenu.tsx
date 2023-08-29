@@ -8,18 +8,18 @@ import {
   MenuList,
   Divider,
 } from "@mui/material";
-import AvatarMenuLink from "./AvatarMenuLink";
 import { ReactNode, useContext } from "react";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-import { AvatarMenuOption, AvatarMenuReturnerContext } from "./AvatarMenu";
-import UnanimatedMenuItem from "../utils/UnanimatedMenuItem";
+import { AvatarMenuReturnerContext } from "./AvatarMenu";
+import UnanimatedMenuItem from "../helpers/UnanimatedMenuItem";
+import { MenuUtils as MU } from "../utils";
 
 type AvPrefProps = {
   children?: ReactNode;
   title: string;
 };
 export default function AvatarPreferenceMenu({ children, title }: AvPrefProps) {
-  const menuReturner: MenuReturner = useContext(AvatarMenuReturnerContext);
+  const menuReturner: MU.MenuReturner = useContext(AvatarMenuReturnerContext);
   return (
     <MenuList>
       <UnanimatedMenuItem>

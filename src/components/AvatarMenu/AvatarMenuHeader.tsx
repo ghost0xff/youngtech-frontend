@@ -10,8 +10,8 @@ import {
   Tooltip,
 } from "@mui/material";
 import AccountAvatar from "../AccountAvatar/AccountAvatar";
-import UnanimatedMenuItem from "../utils/UnanimatedMenuItem";
-import { useEffect, useMemo, useState } from "react";
+import UnanimatedMenuItem from "../helpers/UnanimatedMenuItem";
+import { useState } from "react";
 
 type AvatarMenuHeaderProps = {
   img?: string;
@@ -32,15 +32,12 @@ export default function AvatarMenuHeader({
   async function handleClick(option: CopyOption) {
     const toBeCopied = option === "email" ? email : name;
     await navigator.clipboard.writeText(toBeCopied);
-    // console.log(`copies this to your clipboard: ${toBeCopied}`);
     setTooltipText("Copied to clipboard!");
-    // setCopied(true);
   }
 
   function handleMouseOver(option: CopyOption) {
     const text: string = `Click to copy ${option}`;
     setTooltipText(text);
-    // console.log(`Click to copy ${option}`);
   }
 
   return (

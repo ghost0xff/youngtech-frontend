@@ -14,9 +14,10 @@ import AvatarMenuLink from "./AvatarMenuLink";
 import AvatarMenuInteractive from "./AvatarMenuInteractive";
 import { MenuList, Divider } from "@mui/material";
 import { AvatarMenuOption } from "./AvatarMenu";
-import { ThemePreference, getThemeFromStorage } from "@/lib/utils/themeUtils";
+import { ThemeUtils as TU } from "../utils";
 import { useState } from "react";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { useSafeSession } from "../hooks";
 
 type AvPrefMainMenuProps = {
   onChangeMenu(option: AvatarMenuOption): void;
@@ -25,13 +26,12 @@ type AvPrefMainMenuProps = {
 export default function AvatarPreferenceMainMenu({
   onChangeMenu,
 }: AvPrefMainMenuProps) {
-  const [selectedTheme, setSelectedTheme] = useState<ThemePreference>(
-    getThemeFromStorage()
-  );
-  const { data: session } = useSession();
+  const [selectedTheme, setSelectedTheme] =
+    useState<TU.ThemePreference>("light"); // hardcoded until implemented
+  const { data: session } = useSafeSession();
 
   // temporary till I add i18n
-  const textTheme = (theme: ThemePreference): string => {
+  const textTheme = (theme: TU.ThemePreference): string => {
     let word: "Claro" | "Oscuro" | "del Dispositivo" = "Claro";
     if (theme == "light") {
       word = "Claro";

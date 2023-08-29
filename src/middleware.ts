@@ -2,27 +2,37 @@ import { url } from 'inspector';
 import { NextConfig } from 'next';
 import { withAuth, NextRequestWithAuth} from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
+import { AccessControl, CurrentRoles } from './lib/auth/security';
 
 
 export default withAuth(
     function middleware(req: NextRequestWithAuth) {
-        console.log(req.nextUrl.pathname)
-        console.log(req.nextauth.token)
-        
         const path: string = req.nextUrl.pathname
         const roles = req.nextauth.token?.roles;
+        const token = req.nextauth.token;
 
-        console.log(`jwt access token from middleware => ${req.nextauth.token?.accessToken}`)
-        console.log(`jwt refresh token from middleware => ${req.nextauth.token?.refreshToken}`)
-
-        if(
-            path.startsWith("/dashboard")
-            && !roles?.includes("ROLE_ADMIN")
-        ) {
-            return NextResponse.rewrite(
-                new URL("/denied", req.url)
-            )
+        if(token?.error) {
+            return NextResponse.redirect(new URL("/login", req.url))
         }
+
+        if(!roles) {
+            return NextResponse.rewrite(new URL("/denied", req.url))
+        }
+
+        for (let index = 0; index < accessControl.routes.length; index++) {
+            const route = accessControl.routes[index];
+            if(path.startsWith(route.path)) {
+                const isAuthz = roles.some(item => (
+                    route.roles.includes(item as CurrentRoles))
+                );
+                if (!isAuthz) {
+                    return NextResponse.rewrite(
+                        new URL("/denied", req.url)
+                    );
+                }
+            }
+        }
+
 
     },
     {
@@ -33,12 +43,35 @@ export default withAuth(
 
 )
 
+
+
 export const config = {
     matcher: [
         "/account",
         "/dashboard",
         "/settings",
-        "/checkout",
         "/orders"
+        // "/checkout",
+    ]
+}
+
+const accessControl: AccessControl = {
+    routes: [
+        {
+            path: "/account",
+            roles: ["ROLE_CUSTOMER"]
+        },
+        {
+            path: "/orders",
+            roles: ["ROLE_CUSTOMER"]
+        },
+        {
+            path: "/settings",
+            roles: ["ROLE_CUSTOMER"]
+        },
+        {
+            path: "/dashboard",
+            roles: ["ROLE_ADMIN", "ROLE_EMPLOYEE"]
+        },
     ]
 }

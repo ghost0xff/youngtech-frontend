@@ -7,10 +7,18 @@ type Param = {
     value: string
 }
 
+export function apiRefreshTokenTTL(): number {
+    const refrehTokenTTL = process.env.API_REFRESH_TOKEN_TTL_SECONDS;
+    if(!refrehTokenTTL) {
+        throw new Error("refreh token TTL (seconds) not declared on .env file");
+    }
+    return parseInt(refrehTokenTTL);
+}
+
 export function apiClientId() {
     const clientId = process.env.API_CLIENT_ID;
     if (!clientId) {
-        throw new Error("client_id or client_secret not declared on .env file");
+        throw new Error("client_id not declared on .env file");
     }
     return clientId;
 }
@@ -18,7 +26,7 @@ export function apiClientId() {
 export function apiClientSecret() {
     const clientSecret = process.env.API_CLIENT_SECRET;
     if (!clientSecret) {
-        throw new Error("client_id or client_secret not declared on .env file");
+        throw new Error("client_secret not declared on .env file");
     }
     return clientSecret;
 }

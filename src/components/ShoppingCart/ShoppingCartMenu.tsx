@@ -2,22 +2,23 @@
 
 import { Badge, IconButton, Menu, Tooltip } from "@mui/material";
 import { useMemo, useState } from "react";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { createContext } from "react";
-import ShoppingCartMenuList from "./ShoppingCartMenuList";
 import { mockProducts } from "@/lib/mock/products";
 import { Product } from "@/lib/types";
+import ShoppingCartMenuList from "./ShoppingCartMenuList";
 import EmptyShoppingCartMenuList from "./EmptyShoppingCartMenuList";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { MenuUtils as MU } from "../utils";
 
-export const CartMenuDestroyerContext = createContext<MenuDestroyer>({
+export const CartMenuDestroyerContext = createContext<MU.MenuDestroyer>({
   destroy: () => {},
 });
 
 export default function ShoppingCartMenu() {
   const [anchorEl, setAchorEl] = useState<null | HTMLElement>(null);
-
-  // const [products, setProducts] = useState<Product[]>(mockProducts);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(mockProducts);
+  // const [products, setProducts] = useState<Product[]>([]);
 
   const numberItems = products.length;
   const empty: boolean = numberItems <= 0;
@@ -30,7 +31,7 @@ export default function ShoppingCartMenu() {
     setAchorEl(null);
   }
 
-  const menuDestroyer: MenuDestroyer = useMemo(
+  const menuDestroyer: MU.MenuDestroyer = useMemo(
     () => ({
       destroy: () => {
         handleClose();
@@ -55,8 +56,13 @@ export default function ShoppingCartMenu() {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
-          <Badge badgeContent={numberItems} color="warning">
-            <ShoppingCartOutlinedIcon />
+          <Badge
+            badgeContent={numberItems}
+            color="secondary"
+            // variant="dot"
+            variant="standard"
+          >
+            {open ? <ShoppingCartIcon /> : <ShoppingCartOutlinedIcon />}
           </Badge>
         </IconButton>
       </Tooltip>

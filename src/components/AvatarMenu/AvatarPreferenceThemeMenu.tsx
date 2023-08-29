@@ -11,18 +11,18 @@ import {
   ListSubheader,
   MenuList,
 } from "@mui/material";
-import { ThemePreference, getThemeFromStorage } from "@/lib/utils/themeUtils";
+import { ThemeUtils as TU } from "../utils";
 
 export default function AvatarPreferenceThemeMenu() {
-  const themeChanger = useContext(ThemePreferenceContext);
-  const [selectedTheme, setSelectedTheme] = useState<ThemePreference>(
-    getThemeFromStorage()
+  // const themeChanger = useContext(ThemePreferenceContext);
+  const [selectedTheme, setSelectedTheme] = useState<TU.ThemePreference>(
+    "light" // <--- hard coded until implementeded
   );
 
-  const handleClick = (pref: ThemePreference) => {
-    themeChanger.toggleTheme(pref);
-    setSelectedTheme(pref);
-  };
+  // const handleClick = (pref: TU.ThemePreference) => {
+  //   themeChanger.toggleTheme(pref);
+  //   setSelectedTheme(pref);
+  // };
 
   return (
     <AvatarPreferenceMenu title="Apariencia">
@@ -35,19 +35,33 @@ export default function AvatarPreferenceThemeMenu() {
         // <ListSubheader>Setting appliesy to this browser only</ListSubheader>
         // }
       >
-        <MenuItem onClick={() => handleClick("device")} disabled>
+        <MenuItem
+          onClick={() => {
+            // handleClick("device");
+          }}
+          disabled
+        >
           <ListItemIcon>
             {selectedTheme === "device" && <CheckOutlinedIcon />}
           </ListItemIcon>
           <Typography variant="body1">Usar tema del dispositivo</Typography>
         </MenuItem>
-        <MenuItem onClick={() => handleClick("dark")} disabled>
+        <MenuItem
+          onClick={() => {
+            // handleClick("dark");
+          }}
+          disabled
+        >
           <ListItemIcon>
             {selectedTheme === "dark" && <CheckOutlinedIcon />}
           </ListItemIcon>
           <Typography variant="body1">Tema oscuro</Typography>
         </MenuItem>
-        <MenuItem onClick={() => handleClick("light")}>
+        <MenuItem
+          onClick={() => {
+            // handleClick("light");
+          }}
+        >
           <ListItemIcon>
             {selectedTheme === "light" && <CheckOutlinedIcon />}
           </ListItemIcon>

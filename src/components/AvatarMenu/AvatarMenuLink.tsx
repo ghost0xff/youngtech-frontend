@@ -10,7 +10,8 @@ import {
 } from "@mui/material";
 import { useContext } from "react";
 import { AvatarMenuDestroyerContext } from "./AvatarMenu";
-import UnstyledLink from "../utils/UnstyledLink";
+import UnstyledLink from "../helpers/UnstyledLink";
+import { MenuUtils as MU } from "../utils";
 
 export interface AvMenuLinkProps {
   label: string;
@@ -19,7 +20,9 @@ export interface AvMenuLinkProps {
 }
 
 export default function AvatarMenuLink({ label, icon, href }: AvMenuLinkProps) {
-  const menuDestroyer: MenuDestroyer = useContext(AvatarMenuDestroyerContext);
+  const menuDestroyer: MU.MenuDestroyer = useContext(
+    AvatarMenuDestroyerContext
+  );
   return (
     <UnstyledLink href={href} onClick={menuDestroyer.destroy}>
       <MenuItem>

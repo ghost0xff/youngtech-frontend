@@ -24,12 +24,13 @@ import ShoppingCartMenu from "../ShoppingCart/ShoppingCartMenu";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { useSession, signIn } from "next-auth/react";
 import { AuthLoader } from "../Auth/AuthLoader";
+import { useSafeSession } from "../hooks";
 
 export default function TopAppBar() {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("md"));
   const [openDrawer, setOpenDrawer] = useState(false);
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSafeSession();
 
   function toggleDrawer(): void {
     setOpenDrawer((current) => !current);

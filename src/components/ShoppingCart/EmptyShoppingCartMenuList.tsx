@@ -5,7 +5,7 @@ import {
   MenuList,
   Typography,
 } from "@mui/material";
-import { use, useContext } from "react";
+import { useContext } from "react";
 import { CartMenuDestroyerContext } from "./ShoppingCartMenu";
 
 export default function EmptyShoppingCartMenuList() {

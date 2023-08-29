@@ -1,9 +1,8 @@
-import Random from "@/components/Random";
-import { Container } from "@mui/material";
-import { getServerSession } from "next-auth";
+import { getSafeServerSession } from "@/lib/auth/security";
+import { redirect } from "next/navigation";
 
 export default async function HomePage() {
-  const session = await getServerSession();
+  const session = await getSafeServerSession();
 
   return (
     <>

@@ -3,22 +3,14 @@
 import {
   Box,
   Divider,
-  Drawer,
   ListItem,
   Theme,
-  Toolbar,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { List } from "@mui/material";
-import DrawerButton from "./DrawerButton";
 import HorizontalLogo from "../Logo/HorizontalLogo";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import DrawerItem from "./DrawerItem";
-import HomeIcon from "@mui/icons-material/Home";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type SideDrawerProps = {
   isOpen: boolean;

@@ -2,20 +2,20 @@
 import { IconButton, Menu } from "@mui/material";
 import React, { createContext, useState } from "react";
 import AccountAvatar from "../AccountAvatar/AccountAvatar";
-import AvatarPreferenceMenu from "./AvatarPreferenceMenu";
 import AvatarPreferenceThemeMenu from "./AvatarPreferenceThemeMenu";
 import AvatarPreferenceMainMenu from "./AvatarPreferenceMainMenu";
 import AvatarPreferenceLanguageMenu from "./AvatarPreferenceLanguageMenu";
 import AvatarPreferenceLocationMenu from "./AvatarPreferenceLocationMenu";
-import { useSession } from "next-auth/react";
+import { MenuUtils as MU } from "../utils";
+import { useSafeSession } from "../hooks";
 
 export type AvatarMenuOption = "main" | "theme" | "language" | "location";
 
-export const AvatarMenuDestroyerContext = createContext<MenuDestroyer>({
+export const AvatarMenuDestroyerContext = createContext<MU.MenuDestroyer>({
   destroy: () => {},
 });
 
-export const AvatarMenuReturnerContext = createContext<MenuReturner>({
+export const AvatarMenuReturnerContext = createContext<MU.MenuReturner>({
   return: () => {},
 });
 
@@ -23,7 +23,7 @@ export default function AvatarMenu() {
   const [anchorEl, setAchorEl] = useState<null | HTMLElement>(null);
   const [menu, setMenu] = useState<AvatarMenuOption>("main");
   const open = Boolean(anchorEl);
-  const { data: session } = useSession();
+  const { data: session } = useSafeSession();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAchorEl(event.currentTarget);
@@ -35,11 +35,10 @@ export default function AvatarMenu() {
   };
 
   function changeMenu(menu: AvatarMenuOption): void {
-    // console.log(`menu set to ${menu}`);
     setMenu(menu);
   }
 
-  const menuDestroyer: MenuDestroyer = React.useMemo(
+  const menuDestroyer: MU.MenuDestroyer = React.useMemo(
     () => ({
       destroy: () => {
         handleClose();
@@ -48,7 +47,7 @@ export default function AvatarMenu() {
     []
   );
 
-  const menuReturner: MenuReturner = React.useMemo(
+  const menuReturner: MU.MenuReturner = React.useMemo(
     () => ({
       return: () => {
         setMenu("main");
