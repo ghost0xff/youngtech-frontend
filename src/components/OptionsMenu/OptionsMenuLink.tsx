@@ -9,19 +9,23 @@ import {
   Link,
 } from "@mui/material";
 import { useContext } from "react";
-import { AvatarMenuDestroyerContext } from "./AvatarMenu";
+import { OptionsMenuDestroyerContext } from "./OptionsMenu";
 import UnstyledLink from "../helpers/UnstyledLink";
 import { MenuUtils as MU } from "../utils";
 
-export interface AvMenuLinkProps {
+export interface OptMenuLinkProps {
   label: string;
   icon?: React.ReactNode;
   href: string;
 }
 
-export default function AvatarMenuLink({ label, icon, href }: AvMenuLinkProps) {
+export default function OptionsMenuLink({
+  label,
+  icon,
+  href,
+}: OptMenuLinkProps) {
   const menuDestroyer: MU.MenuDestroyer = useContext(
-    AvatarMenuDestroyerContext
+    OptionsMenuDestroyerContext
   );
   return (
     <UnstyledLink href={href} onClick={menuDestroyer.destroy}>

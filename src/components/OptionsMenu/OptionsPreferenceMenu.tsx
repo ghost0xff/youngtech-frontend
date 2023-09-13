@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { ReactNode, useContext } from "react";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-import { AvatarMenuReturnerContext } from "./AvatarMenu";
+import { OptionsMenuReturnerContext } from "./OptionsMenu";
 import UnanimatedMenuItem from "../helpers/UnanimatedMenuItem";
 import { MenuUtils as MU } from "../utils";
 
@@ -18,8 +18,11 @@ type AvPrefProps = {
   children?: ReactNode;
   title: string;
 };
-export default function AvatarPreferenceMenu({ children, title }: AvPrefProps) {
-  const menuReturner: MU.MenuReturner = useContext(AvatarMenuReturnerContext);
+export default function OptionsPreferenceMenu({
+  children,
+  title,
+}: AvPrefProps) {
+  const menuReturner: MU.MenuReturner = useContext(OptionsMenuReturnerContext);
   return (
     <MenuList>
       <UnanimatedMenuItem>

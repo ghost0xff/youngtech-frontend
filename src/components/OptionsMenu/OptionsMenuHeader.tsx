@@ -1,6 +1,5 @@
 "use client";
 
-import { getInitials } from "@/lib/utils/stringUtils";
 import {
   MenuItem,
   ListItemAvatar,
@@ -12,8 +11,10 @@ import {
 import AccountAvatar from "../AccountAvatar/AccountAvatar";
 import UnanimatedMenuItem from "../helpers/UnanimatedMenuItem";
 import { useState } from "react";
+import { AuthLoader } from "../Auth/AuthLoader";
+import CoolTooltip from "../CoolTooltip/CoolTooltip";
 
-type AvatarMenuHeaderProps = {
+type OptionsMenuHeaderProps = {
   img?: string;
   name: string;
   email: string;
@@ -21,22 +22,21 @@ type AvatarMenuHeaderProps = {
 
 type CopyOption = "email" | "name";
 
-export default function AvatarMenuHeader({
+export default function OptionsMenuHeader({
   img,
   name,
   email,
-}: AvatarMenuHeaderProps) {
-  // const [copied, setCopied] = useState(false);
-  const [tooltipText, setTooltipText] = useState("Click to copy me!");
-
+}: OptionsMenuHeaderProps) {
+  const [tooltipText, setTooltipText] = useState("Haz click para copiarme");
   async function handleClick(option: CopyOption) {
     const toBeCopied = option === "email" ? email : name;
     await navigator.clipboard.writeText(toBeCopied);
-    setTooltipText("Copied to clipboard!");
+    setTooltipText("Copiado al portapapeles!");
   }
 
   function handleMouseOver(option: CopyOption) {
-    const text: string = `Click to copy ${option}`;
+    const word = option === "email" ? "correo" : "nombre";
+    const text: string = `Click para copiar ${word}`;
     setTooltipText(text);
   }
 

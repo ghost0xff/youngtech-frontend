@@ -1,5 +1,5 @@
-import ContinueGoogleButton from "@/components/LoginForm/ContinueGoogleButton";
-import SignUpAgreementLink from "@/components/LoginForm/SignUpAgreementLink";
+import ContinueGoogleButton from "@/components/Login/ContinueGoogleButton";
+import SignUpAgreementLink from "@/components/Login/SignUpAgreementLink";
 import SimpleFooter from "@/components/SimpleFooter/SimpleFooter";
 import {
   Card,

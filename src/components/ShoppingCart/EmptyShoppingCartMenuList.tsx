@@ -24,13 +24,16 @@ export default function EmptyShoppingCartMenuList() {
         <ListItemText
           sx={{ p: 2 }}
           primary={
-            <Typography sx={{ color: "text.disabled" }} textAlign="center">
+            <Typography
+              component="h1"
+              sx={{ color: "text.disabled" }}
+              textAlign="center"
+            >
               {/* Your cart is empty. */}
               Tu carrito está vacío
             </Typography>
           }
           secondary={
-            // <Button variant="text">Keep Shopping</Button>
             <Link
               onClick={menuDestroyer.destroy}
               underline="always"
@@ -38,14 +41,15 @@ export default function EmptyShoppingCartMenuList() {
               href="/"
             >
               <Typography
+                component="span"
                 textAlign="center"
                 variant="body2"
                 sx={{
+                  display: "block",
                   fontWeight: 700,
                   color: "secondary.main",
                 }}
               >
-                {/* Keep Shopping */}
                 Sigue Comprando
               </Typography>
             </Link>

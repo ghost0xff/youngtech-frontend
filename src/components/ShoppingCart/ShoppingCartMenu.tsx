@@ -8,8 +8,9 @@ import { Product } from "@/lib/types";
 import ShoppingCartMenuList from "./ShoppingCartMenuList";
 import EmptyShoppingCartMenuList from "./EmptyShoppingCartMenuList";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { MenuUtils as MU } from "../utils";
+import ShoppingCartSharpIcon from "@mui/icons-material/ShoppingCartSharp";
+import CoolTooltip from "../CoolTooltip/CoolTooltip";
 
 export const CartMenuDestroyerContext = createContext<MU.MenuDestroyer>({
   destroy: () => {},
@@ -17,8 +18,8 @@ export const CartMenuDestroyerContext = createContext<MU.MenuDestroyer>({
 
 export default function ShoppingCartMenu() {
   const [anchorEl, setAchorEl] = useState<null | HTMLElement>(null);
-  const [products, setProducts] = useState<Product[]>(mockProducts);
-  // const [products, setProducts] = useState<Product[]>([]);
+  // const [products, setProducts] = useState<Product[]>(mockProducts);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const numberItems = products.length;
   const empty: boolean = numberItems <= 0;
@@ -49,9 +50,8 @@ export default function ShoppingCartMenu() {
         }
       >
         <IconButton
-          size="small"
+          size="large"
           onClick={handleClick}
-          // sx={{ ml: 2 }}
           aria-controls={open ? "shopping-cart-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
@@ -59,10 +59,14 @@ export default function ShoppingCartMenu() {
           <Badge
             badgeContent={numberItems}
             color="secondary"
-            // variant="dot"
             variant="standard"
           >
-            {open ? <ShoppingCartIcon /> : <ShoppingCartOutlinedIcon />}
+            {open ? <ShoppingCartSharpIcon /> : <ShoppingCartOutlinedIcon />}
+            {/* {open ? (
+              <ShoppingCartSharpIcon color="primary" />
+            ) : (
+              <ShoppingCartOutlinedIcon color="primary" />
+            )} */}
           </Badge>
         </IconButton>
       </Tooltip>
@@ -85,10 +89,10 @@ export default function ShoppingCartMenu() {
         }}
       >
         <CartMenuDestroyerContext.Provider value={menuDestroyer}>
-          {!empty ? (
-            <ShoppingCartMenuList products={products} />
-          ) : (
+          {empty ? (
             <EmptyShoppingCartMenuList />
+          ) : (
+            <ShoppingCartMenuList products={products} />
           )}{" "}
         </CartMenuDestroyerContext.Provider>
       </Menu>

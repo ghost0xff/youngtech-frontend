@@ -3,7 +3,7 @@
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import { Fragment, useContext, useState } from "react";
 import { ThemePreferenceContext } from "../ThemeRegistry/ThemeRegistry";
-import AvatarPreferenceMenu from "./AvatarPreferenceMenu";
+import OptionsPreferenceMenu from "./OptionsPreferenceMenu";
 import {
   Typography,
   MenuItem,
@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { ThemeUtils as TU } from "../utils";
 
-export default function AvatarPreferenceThemeMenu() {
+export default function OptionsPreferenceThemeMenu() {
   // const themeChanger = useContext(ThemePreferenceContext);
   const [selectedTheme, setSelectedTheme] = useState<TU.ThemePreference>(
     "light" // <--- hard coded until implementeded
@@ -25,7 +25,7 @@ export default function AvatarPreferenceThemeMenu() {
   // };
 
   return (
-    <AvatarPreferenceMenu title="Apariencia">
+    <OptionsPreferenceMenu title="Apariencia">
       <MenuList
         disablePadding
         // subheader={
@@ -68,6 +68,6 @@ export default function AvatarPreferenceThemeMenu() {
           <Typography variant="body1">Tema claro</Typography>
         </MenuItem>
       </MenuList>
-    </AvatarPreferenceMenu>
+    </OptionsPreferenceMenu>
   );
 }

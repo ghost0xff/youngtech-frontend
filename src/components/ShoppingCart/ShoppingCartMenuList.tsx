@@ -19,6 +19,7 @@ import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCa
 import { Fragment, ReactNode, useContext } from "react";
 import { Product } from "@/lib/types";
 import ShoppingCartMenuItem from "./ShoppingCartMenuItem";
+import { MenuUtils as MU } from "../utils";
 
 type ShoppingCartMenuListProps = {
   products: Product[];
@@ -30,7 +31,7 @@ export default function ShoppingCartMenuList({
     .reduce((prev, current) => prev + current.price, 0)
     .toFixed(2);
   const theme: Theme = useTheme();
-  const menuDestroyer: MenuDestroyer = useContext(CartMenuDestroyerContext);
+  const menuDestroyer: MU.MenuDestroyer = useContext(CartMenuDestroyerContext);
 
   return (
     <MenuList
@@ -46,7 +47,7 @@ export default function ShoppingCartMenuList({
           <UnanimatedMenuItem>
             <ListItemText>
               <Typography sx={{ fontWeight: 600 }} variant="h6">
-                Total: ${totalPrice}
+                Total: ₡{totalPrice}
               </Typography>
             </ListItemText>
             <Tooltip title="Go to checkout">

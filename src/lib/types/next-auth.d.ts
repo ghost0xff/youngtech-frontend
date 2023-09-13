@@ -14,6 +14,8 @@ declare module "next-auth" {
       roles: string[],
       accessToken: string
       refreshToken: string,
+      firstnames: string,
+      lastnames: string
    }
 
    interface Account extends DefaultAccount {
@@ -31,7 +33,8 @@ declare module "next-auth/jwt" {
         refreshTokenExpiresAt: number,
         roles: string[],
         error?: "RefreshAccessTokenError"
-        
+        firstnames: string,
+        lastnames: string
 
     }
   }

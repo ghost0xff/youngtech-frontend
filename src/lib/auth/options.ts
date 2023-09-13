@@ -29,8 +29,8 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async signIn({user, account, profile}) {
             console.log("----------Gathered info----------------");
-            console.log(account)
-            console.log(profile)
+            // console.log(account)
+            // console.log(profile)
 
             const exchangeRes: Response = await exchange(
                 account?.provider as string,
@@ -53,8 +53,8 @@ export const authOptions: NextAuthOptions = {
             }
             const info: UserInfo = await infoRes.json();
             console.log("----------Info from EIDTE exchange----------------");
-            console.log(eidteBody);
-            console.log(info);
+            // console.log(eidteBody);
+            // console.log(info);
            
             user.id = info.sub;
             user.roles = info.roles;
@@ -62,6 +62,8 @@ export const authOptions: NextAuthOptions = {
             user.name = info.given_name.concat(" ").concat(info.family_name);
             user.accessToken = eidteBody.access_token;
             user.refreshToken = eidteBody.refresh_token;
+            user.firstnames = info.given_name;
+            user.lastnames = info.family_name;
             
             if(account?.access_token) {
                 account.access_token = eidteBody.access_token;
@@ -86,6 +88,8 @@ export const authOptions: NextAuthOptions = {
                 token.roles = user.roles;
                 token.email = user.email;
                 token.name = user.name;
+                token.firstnames =  user.firstnames; 
+                token.lastnames =  user.lastnames; 
             } 
 
             if(account?.access_token && account.refresh_token && account.expires_at) {
@@ -98,23 +102,23 @@ export const authOptions: NextAuthOptions = {
                 token.refreshTokenExpiresAt = nextRefreshTokenExpiresAt;
 
                 console.log("--------------------------ADDED TOKENS TO JWT SESSION-------------------------")
-                console.log(`ACCESS_TOKEN: ${token.accessToken}`)
-                console.log(`REFRESH_TOKEN: ${token.refreshToken}`)
-                console.log(`ACCESS EXPIRES AT (DATE): ${fromEpochTime(token.accessTokenExpiresAt)}`)
-                console.log(`REFRESH EXPIRES AT (DATE): ${fromEpochTime(token.accessTokenExpiresAt)}`)
-                console.log("------------------------------------------------------------------------------")
+                // console.log(`ACCESS_TOKEN: ${token.accessToken}`)
+                // console.log(`REFRESH_TOKEN: ${token.refreshToken}`)
+                // console.log(`ACCESS EXPIRES AT (DATE): ${fromEpochTime(token.accessTokenExpiresAt)}`)
+                // console.log(`REFRESH EXPIRES AT (DATE): ${fromEpochTime(token.accessTokenExpiresAt)}`)
+                // console.log("------------------------------------------------------------------------------")
                 return token;
 
             } else if (notExpiredAccToken) {
                 // case hasn't expired
                 console.log("--------------------------TOKENS HAVEN'T EXPIRED YET-------------------------")
-                console.log(`ACCESS_TOKEN: ${token.accessToken}`)
-                console.log(`REFRESH_TOKEN: ${token.refreshToken}`)
-                console.log(`ACCESS EXPIRES AT (EPOCH-TIME): ${token.accessTokenExpiresAt}`)
-                console.log(`CURRENT DATE ${new Date()}`)
-                console.log(`ACCESS EXPIRES AT DATE: ${fromEpochTime(token.accessTokenExpiresAt)}`)
-                console.log(`REFRESH EXPIRES AT DATE: ${fromEpochTime(token.refreshTokenExpiresAt)}`)
-                console.log("------------------------------------------------------------------------------")
+                // console.log(`ACCESS_TOKEN: ${token.accessToken}`)
+                // console.log(`REFRESH_TOKEN: ${token.refreshToken}`)
+                // console.log(`ACCESS EXPIRES AT (EPOCH-TIME): ${token.accessTokenExpiresAt}`)
+                // console.log(`CURRENT DATE ${new Date()}`)
+                // console.log(`ACCESS EXPIRES AT DATE: ${fromEpochTime(token.accessTokenExpiresAt)}`)
+                // console.log(`REFRESH EXPIRES AT DATE: ${fromEpochTime(token.refreshTokenExpiresAt)}`)
+                // console.log("------------------------------------------------------------------------------")
                 return token;
             } else {
                 // case access_token has expired, try to refresh it
@@ -153,7 +157,7 @@ export const authOptions: NextAuthOptions = {
                     return token;
                 } catch(error) {
                     console.warn(
-                        "Error refreshing token => request WAS successfully but somethinng went wrong after that",
+                        "Error refreshing token => HTTP re re request was unsuccesfull",
                          error
                     );
                     return { ...token, error: 'RefreshAccessTokenError' as const }
@@ -169,9 +173,10 @@ export const authOptions: NextAuthOptions = {
                 session.user.roles = token.roles;
                 session.user.accessToken = token.accessToken;
                 session.user.refreshToken = token.refreshToken;
-
                 session.user.email = token.email;
                 session.user.name = token.name;
+                session.user.firstnames = token.firstnames;
+                session.user.lastnames = token.lastnames;
             }
             if(token) {
                 session.error = token.error;

@@ -6,5 +6,5 @@ async function delay(milis: number) {
 
 export default function OrdersPage() {
   delay(5000);
-  return <p>List of orders</p>;
+  return <p>List of blogs</p>;
 }

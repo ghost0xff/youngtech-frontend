@@ -21,36 +21,11 @@ export default function AccountAvatar({
   imgHeight,
 }: AccountAvatarProps) {
   const initials: string = getInitials(name);
+
   return (
-    // <Badge
-    //   // color="success"
-    //   badgeContent=" "
-    //   overlap="circular"
-    //   variant="dot"
-    //   anchorOrigin={{ vertical: "top", horizontal: "right" }}
-    // >
-    <Avatar
-      alt={name}
-      src={img}
-      sx={{ width: imgWidth, height: imgHeight, bgcolor: "primary.main" }}
-    >
+    <Avatar alt={name} src={img}>
       <Typography fontWeight="600">{initials}</Typography>
     </Avatar>
-    // </Badge>
   );
-  // return (
-  //   <StyledBadge
-  //     badgeContent=" "
-  //     overlap="circular"
-  //     variant="dot"
-  //     anchorOrigin={{
-  //       vertical: "bottom",
-  //       horizontal: "right",
-  //     }}
-  //   >
-  //     <Avatar alt={name} src={img} sx={{ width: imgWidth, height: imgHeight }}>
-  //       <Typography fontWeight="600">{initials}</Typography>
-  //     </Avatar>
-  //   </StyledBadge>
-  // );
+
 }
