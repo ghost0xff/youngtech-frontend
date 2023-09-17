@@ -49,7 +49,7 @@ export const config = {
     matcher: [
         "/account",
         "/dashboard",
-        "/settings",
+        // "/settings",
         "/orders"
         // "/checkout",
     ]
@@ -65,10 +65,10 @@ const accessControl: AccessControl = {
             path: "/orders",
             roles: ["ROLE_CUSTOMER"]
         },
-        {
-            path: "/settings",
-            roles: ["ROLE_CUSTOMER"]
-        },
+        // {
+        //     path: "/settings",
+        //     roles: ["ROLE_CUSTOMER"]
+        // },
         {
             path: "/dashboard",
             roles: ["ROLE_ADMIN", "ROLE_EMPLOYEE"]

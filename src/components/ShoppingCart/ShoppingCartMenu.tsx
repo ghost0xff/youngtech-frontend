@@ -61,7 +61,11 @@ export default function ShoppingCartMenu() {
             color="secondary"
             variant="standard"
           >
-            {open ? <ShoppingCartSharpIcon /> : <ShoppingCartOutlinedIcon />}
+            {open ? (
+              <ShoppingCartSharpIcon color="primary" />
+            ) : (
+              <ShoppingCartOutlinedIcon color="primary" />
+            )}
             {/* {open ? (
               <ShoppingCartSharpIcon color="primary" />
             ) : (

@@ -33,7 +33,7 @@ const generalTheme = createTheme({
           // scrollbarWidth: 1,
           "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
             backgroundColor: lightScrollbarTrack,
-            width: 4,
+            width: 9,
           },
           "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
             borderRadius: 50,

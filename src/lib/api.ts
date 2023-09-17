@@ -31,8 +31,17 @@ export function apiClientSecret() {
     return clientSecret;
 }
 
+export function apiBaseUrl(): string  {
+    const url = "http://localhost:8080/api/v1"
+    // const url = process.env.API_URL;
+    if (!url) {
+        throw new Error("apiBaseUrl not declared on .env file");
+    }
+    return url;
+}
+
 export default function fromApi(fromUrl: string): string {
-    const fromApiUrl: string= process.env.API_URL as string;
+    const fromApiUrl: string = apiBaseUrl();
     const slash = "/";
     let apiUrl: string = fromApiUrl;
     let url: string = fromUrl;
@@ -43,7 +52,6 @@ export default function fromApi(fromUrl: string): string {
     if(fromUrl.startsWith(slash)) {
         url = fromUrl.substring(1);
     }
-
     return  apiUrl.concat(url);
 }
 

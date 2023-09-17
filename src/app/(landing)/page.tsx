@@ -22,6 +22,9 @@ import { Add } from "@mui/icons-material";
 import Link from "next/link";
 import TextWithEllipsis from "@/components/helpers/TextWithEllipsis";
 import ProductCardActions from "@/components/ProductCard/ProductCardActions";
+import ProductCard from "@/components/ProductCard/ProductCard";
+import fromApi from "@/lib/api";
+import { Product } from "@/lib/actions/product";
 
 export const metadata: Metadata = {
   title: "YoungTech",
@@ -29,55 +32,26 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const session = await getSafeServerSession();
+  // TODO: CHANGE CACHING HERE!!!!
+  const rs: Response = await fetch(fromApi("/products"), { cache: "no-store" });
 
-  const price = 12.3829108309123;
+  if (!rs.ok) {
+    console.error("Could not fetch initial products on home page");
+  }
+  const products: Product[] = await rs.json();
+  console.log(products);
 
   return (
     <>
       <Grid container spacing={2}>
-        <Grid>
-          <Card variant="outlined">
-            <CardActionArea href="/account">
-              <CardMedia
-                component="img"
-                height={200}
-                // width={200}
-                image="/laptop.webp"
-                alt="some keyboard"
-              />
-            </CardActionArea>
-            <CardContent sx={{ minWidth: 300, maxWidth: 300, padding: 1 }}>
-              <Typography variant="subtitle1" component="div" fontWeight={600}>
-                Corsair K99 Keyboard
-              </Typography>
-              <TextWithEllipsis lines={1}>
-                This is the descriptions of a product of only This is the
-                descriptions of a product of only This is the descriptions of a
-                product of only This is the descriptions of a product of only
-                This is the descriptions of a product of only
-              </TextWithEllipsis>
-            </CardContent>
-            <CardActions
-              disableSpacing
-              sx={{
-                alignSelf: "stretch",
-                display: "flex",
-                justifyContent: "space-between",
-                // alignItems: "flex-start",
-                alignItems: "center",
-                // p: 0,
-              }}
-            >
-              <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                ₡{price.toFixed(2)}
-              </Typography>
-              <ProductCardActions />
-            </CardActions>
-          </Card>
-        </Grid>
-        {/* final de card */}
+        {products.map((p) => (
+          <Grid key={p.id}>
+            <ProductCard product={p} />
+          </Grid>
+        ))}
       </Grid>
     </>
   );
 }
+
+

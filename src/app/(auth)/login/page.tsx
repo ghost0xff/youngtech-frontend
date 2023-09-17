@@ -51,7 +51,7 @@ export default function LoginPage() {
                   <ContinueGoogleButton />
                 </Stack>
                 <Typography variant="caption" color="text.disabled">
-                  Al registrarse, acepta los
+                  Al registrarse, acepta los{" "}
                   <SignUpAgreementLink
                     text="Términos de servicio"
                     href="/tos"

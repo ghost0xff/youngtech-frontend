@@ -26,7 +26,7 @@ export default function EmptyShoppingCartMenuList() {
           primary={
             <Typography
               component="h1"
-              sx={{ color: "text.disabled" }}
+              sx={{ color: "text.secondary" }}
               textAlign="center"
             >
               {/* Your cart is empty. */}

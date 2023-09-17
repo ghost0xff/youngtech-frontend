@@ -21,22 +21,25 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { signIn } from "next-auth/react";
 import { AuthLoader } from "../Auth/AuthLoader";
 import LoginDialog from "../Login/LoginDialog";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import FilteringDrawer from "../FilteringDrawer/FilteringDrawer";
 import SearchBar from "../Search/SearchBar";
+import { AuthNeederContext, AuthnNeederr } from "../Auth/AuthProvider";
 
 const drawerWidth = 240;
 
 export default function TopAppBar() {
   // const [openDialog, setOpenDialog] = useState(false);
 
-  // function handleClick() {
+  // const handleOpen = () => {
   //   setOpenDialog(true);
-  // }
+  // };
 
-  // function handleClose() {
+  // const handleClose = () => {
   //   setOpenDialog(false);
-  // }
+  // };
+
+  const needer: AuthnNeederr = useContext(AuthNeederContext);
 
   return (
     <>
@@ -95,7 +98,7 @@ export default function TopAppBar() {
                     color="secondary"
                     startIcon={<AccountCircleOutlinedIcon />}
                     variant="outlined"
-                    onClick={() => signIn()}
+                    onClick={() => needer.need()}
                   >
                     Acceder
                   </Button>
