@@ -1,1 +1,1 @@
-# Blazingly fast frontend for YoungTech E-commerce
+# Frontend for YoungTech E-commerce
