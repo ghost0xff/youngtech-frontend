@@ -123,8 +123,7 @@ export default function TopAppBar() {
         </Toolbar>
         <Divider />
       </AppBar>
-
-      <FilteringDrawer />
+      {/* <FilteringDrawer /> */}
     </>
   );
 }

@@ -3,7 +3,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import exchange, { TokenResponse, UserInfo, refreshToken, userInfo } from "./eidte";
 import { str } from "../utils/stringUtils";
 import { FamilyRestroomOutlined } from "@mui/icons-material";
-import fromApi, { apiRefreshTokenTTL }  from "../api";
+import fromApi, { apiRefreshTokenTTL }  from "../api/utils";
 import { Almarai, Economica, Epilogue } from "next/font/google";
 import { JWT } from "next-auth/jwt";
 import { IncomingMessage } from "http";
@@ -69,7 +69,8 @@ export const authOptions: NextAuthOptions = {
                 account.access_token = eidteBody.access_token;
                 account.refresh_token = eidteBody.refresh_token;
                 account.expires_in = eidteBody.expires_in;
-                console.log(account.id_token)
+                // console.log(account.id_token)
+                console.log(account.access_token)
             } else {
                 return false;
             }

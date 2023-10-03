@@ -1,44 +1,57 @@
 "use client";
 
 import {
+  Alert,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
+  Snackbar,
   Typography,
 } from "@mui/material";
 import TextWithEllipsis from "../helpers/TextWithEllipsis";
 import ProductCardActions from "./ProductCardActions";
-import { Product } from "@/lib/actions/product";
-import fromApi from "@/lib/api";
+import { Product } from "@/lib/api/product";
+import fromApi from "@/lib/api/utils";
+import { useState } from "react";
 
 type Props = {
   product: Product;
 };
 
-export default async function ProductCard({ product }: Props) {
-  console.log(fromApi("/products"));
+export default function ProductCard({ product }: Props) {
   return (
     <>
       <Card variant="outlined">
-        <CardActionArea href="/product">
+        <CardActionArea href={`/${product.name}`}>
           <CardMedia
             component="img"
-            height={200}
-            // image={fromApi(`/products/${product.id}/images?main=true`)}
-            image="http://localhost:8080/api/v1/products/3/images/20"
+            height={170}
+            image={fromApi(`/products/${product.id}/images?main=true`)}
             alt="some keyboard"
           />
         </CardActionArea>
-        <CardContent sx={{ minWidth: 300, maxWidth: 300, padding: 1 }}>
-          {product.name}
-          <Typography
-            variant="subtitle1"
-            component="div"
-            fontWeight={600}
-          ></Typography>
-          <TextWithEllipsis lines={1}>{product.description} </TextWithEllipsis>
+        <CardContent
+          sx={{
+            // minWidth: 200,
+            // maxWidth: 300,
+            py: 0,
+            px: 2,
+            pt: 1,
+          }}
+        >
+          <TextWithEllipsis
+            lines={1}
+            color="primary"
+            variant="body1"
+            // component="div"
+          >
+            {product.name}
+          </TextWithEllipsis>
+          <TextWithEllipsis lines={1} color="secondary" variant="body2">
+            {product.description}
+          </TextWithEllipsis>
         </CardContent>
         <CardActions
           disableSpacing
@@ -46,15 +59,13 @@ export default async function ProductCard({ product }: Props) {
             alignSelf: "stretch",
             display: "flex",
             justifyContent: "space-between",
-            // alignItems: "flex-start",
             alignItems: "center",
-            // p: 0,
           }}
         >
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
             ₡{product.price.toFixed(2)}
           </Typography>
-          <ProductCardActions />
+          <ProductCardActions productId={product.id} />
         </CardActions>
       </Card>
     </>

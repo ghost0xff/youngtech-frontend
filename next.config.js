@@ -17,7 +17,6 @@ const nextConfig = {
       },
       {
         protocol: 'http',
-        // protocol: 'https',
         hostname: 'localhost',
         port: '8080',
       },

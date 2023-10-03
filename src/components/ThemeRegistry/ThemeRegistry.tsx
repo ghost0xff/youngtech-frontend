@@ -21,8 +21,8 @@ export default function ThemeRegistry({
 }: {
   children: React.ReactNode;
 }) {
-  const [prefTheme, setPrefTheme] = React.useState<TU.ThemePreference>("light");
-  const [paletteMode, setPaletteMode] = React.useState<PaletteMode>("light");
+  // const [prefTheme, setPrefTheme] = React.useState<TU.ThemePreference>("light");
+  // const [paletteMode, setPaletteMode] = React.useState<PaletteMode>("light");
   const themeChanger: ThemeChanger = React.useMemo(
     () => ({
       toggleTheme: (preference: TU.ThemePreference) => {
@@ -55,8 +55,6 @@ export default function ThemeRegistry({
           least in styling????
          */}
         <ThemeProvider theme={getTheme("light")}>
-          {/* {"do i prefer dark theme? = " + String(prefersDarkTheme)} */}
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline enableColorScheme />
           {children}
         </ThemeProvider>

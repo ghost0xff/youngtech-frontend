@@ -1,5 +1,5 @@
-import fromApi, { apiClientId, apiClientSecret } from "../api";
-import { bodyFromParams } from "../api";
+import fromApi, { apiClientId, apiClientSecret } from "../api/utils";
+import { bodyFromParams } from "../api/utils";
 
 enum OAuth2Params {
     GrantType = "grant_type",

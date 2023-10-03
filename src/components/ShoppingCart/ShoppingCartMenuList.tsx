@@ -15,23 +15,28 @@ import {
 import UnanimatedMenuItem from "../helpers/UnanimatedMenuItem";
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import { CartMenuDestroyerContext } from "./ShoppingCartMenu";
-import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCartOutlined";
-import { Fragment, ReactNode, useContext } from "react";
-import { Product } from "@/lib/types";
+import { useContext } from "react";
 import ShoppingCartMenuItem from "./ShoppingCartMenuItem";
 import { MenuUtils as MU } from "../utils";
+import { CartItem, calcTotal } from "@/lib/api/cart";
 
-type ShoppingCartMenuListProps = {
-  products: Product[];
+type Props = {
+  items: CartItem[];
+  onClickRemove(id: number): void;
 };
 export default function ShoppingCartMenuList({
-  products,
-}: ShoppingCartMenuListProps) {
-  const totalPrice: string = products
-    .reduce((prev, current) => prev + current.price, 0)
-    .toFixed(2);
+  items,
+  onClickRemove: handleClickRemove,
+}: Props) {
   const theme: Theme = useTheme();
   const menuDestroyer: MU.MenuDestroyer = useContext(CartMenuDestroyerContext);
+
+  const totalPrice: string = items
+    .reduce(
+      (prev, current) => prev + current.product.price * current.quantity,
+      0
+    )
+    .toFixed(2);
 
   return (
     <MenuList
@@ -50,7 +55,7 @@ export default function ShoppingCartMenuList({
                 Total: ₡{totalPrice}
               </Typography>
             </ListItemText>
-            <Tooltip title="Go to checkout">
+            <Tooltip title="Ir a checkout" placement="right">
               <Link href="/checkout" onClick={menuDestroyer.destroy}>
                 <IconButton>
                   <ShoppingCartCheckoutOutlinedIcon
@@ -64,10 +69,14 @@ export default function ShoppingCartMenuList({
         </ListSubheader>
       }
     >
-      {products.map((product, index) => (
-        <span key={product.id}>
-          <ShoppingCartMenuItem product={product} />
-          {index < products.length - 1 && <Divider />}
+      {items.map((item, index) => (
+        <span key={item.id}>
+          <ShoppingCartMenuItem
+            product={item.product}
+            quantity={item.quantity}
+            onClickRemove={handleClickRemove}
+          />
+          {index < items.length - 1 && <Divider />}
         </span>
       ))}
     </MenuList>

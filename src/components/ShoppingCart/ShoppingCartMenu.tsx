@@ -1,16 +1,35 @@
 "use client";
 
 import { Badge, IconButton, Menu, Tooltip } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { createContext } from "react";
-import { mockProducts } from "@/lib/mock/products";
-import { Product } from "@/lib/types";
 import ShoppingCartMenuList from "./ShoppingCartMenuList";
 import EmptyShoppingCartMenuList from "./EmptyShoppingCartMenuList";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { MenuUtils as MU } from "../utils";
 import ShoppingCartSharpIcon from "@mui/icons-material/ShoppingCartSharp";
-import CoolTooltip from "../CoolTooltip/CoolTooltip";
+import { CartItem } from "@/lib/api/cart";
+
+export interface ItemsSetter {
+  set(items: CartItem[]): void;
+}
+
+export interface CartManager {
+  prodIds(): number[];
+  items(): CartItem[];
+  addItem(prodId: number, quantity: number): void;
+  removeItem(prodId: number, quantity: number): void;
+}
+export const ShoppingCartContext = createContext<CartManager>({
+  prodIds() {
+    return [];
+  },
+  items() {
+    return [];
+  },
+  addItem(pid: number, quantity: number) {},
+  removeItem(pid: number, quantity: number) {},
+});
 
 export const CartMenuDestroyerContext = createContext<MU.MenuDestroyer>({
   destroy: () => {},
@@ -18,19 +37,24 @@ export const CartMenuDestroyerContext = createContext<MU.MenuDestroyer>({
 
 export default function ShoppingCartMenu() {
   const [anchorEl, setAchorEl] = useState<null | HTMLElement>(null);
-  // const [products, setProducts] = useState<Product[]>(mockProducts);
-  const [products, setProducts] = useState<Product[]>([]);
+  const cartManager: CartManager = useContext(ShoppingCartContext);
+  const items: CartItem[] = cartManager.items();
 
-  const numberItems = products.length;
+  const numberItems: number = items.reduce(
+    (prev, current) => prev + current.quantity,
+    0
+  );
+
   const empty: boolean = numberItems <= 0;
   const open = Boolean(anchorEl);
+
   function handleClick(event: React.MouseEvent<HTMLElement>) {
     setAchorEl(event.currentTarget);
   }
 
-  function handleClose() {
+  const handleClose = function () {
     setAchorEl(null);
-  }
+  };
 
   const menuDestroyer: MU.MenuDestroyer = useMemo(
     () => ({
@@ -40,6 +64,10 @@ export default function ShoppingCartMenu() {
     }),
     []
   );
+
+  const handleClickRemove = function (id: number) {
+    cartManager.removeItem(id, 1);
+  };
 
   return (
     <>
@@ -66,11 +94,6 @@ export default function ShoppingCartMenu() {
             ) : (
               <ShoppingCartOutlinedIcon color="primary" />
             )}
-            {/* {open ? (
-              <ShoppingCartSharpIcon color="primary" />
-            ) : (
-              <ShoppingCartOutlinedIcon color="primary" />
-            )} */}
           </Badge>
         </IconButton>
       </Tooltip>
@@ -96,7 +119,10 @@ export default function ShoppingCartMenu() {
           {empty ? (
             <EmptyShoppingCartMenuList />
           ) : (
-            <ShoppingCartMenuList products={products} />
+            <ShoppingCartMenuList
+              items={items}
+              onClickRemove={handleClickRemove}
+            />
           )}{" "}
         </CartMenuDestroyerContext.Provider>
       </Menu>

@@ -1,4 +1,4 @@
-import { authOptions } from "./auth/options";
+import { authOptions } from "../auth/options";
 
 type Method = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -32,9 +32,9 @@ export function apiClientSecret() {
 }
 
 export function apiBaseUrl(): string  {
-    const url = "http://localhost:8080/api/v1"
-    // const url = process.env.API_URL;
+    const url = process.env.NEXT_PUBLIC_API_BASE_URL;
     if (!url) {
+        console.log(url)
         throw new Error("apiBaseUrl not declared on .env file");
     }
     return url;
@@ -45,7 +45,6 @@ export default function fromApi(fromUrl: string): string {
     const slash = "/";
     let apiUrl: string = fromApiUrl;
     let url: string = fromUrl;
-
     if(!fromApiUrl.endsWith(slash)) {
         apiUrl = fromApiUrl.concat(slash)
     }
@@ -55,7 +54,7 @@ export default function fromApi(fromUrl: string): string {
     return  apiUrl.concat(url);
 }
 
-export function getUrl(fromUrl: string, params?: Param[]): string {
+export function url(fromUrl: string, params?: Param[]): string {
     let rs: string = fromApi(fromUrl);
     if(params) {
         const searchParams = bodyFromParams(params);
@@ -75,7 +74,5 @@ export function bodyFromParams(params: Param[]): string {
     }
     return searchParams.toString();
 }
-
-
 
 

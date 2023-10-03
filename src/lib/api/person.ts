@@ -1,4 +1,4 @@
-import fromApi from "../api";
+import fromApi from "./utils";
 import { Order } from "./order";
 import { Sale } from "./sale";
 import { User } from "./user";
