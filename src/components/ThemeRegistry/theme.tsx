@@ -110,15 +110,15 @@ const lightTheme: Theme = createTheme({
       main: "#1F6EEA",
       contrastText: "#C8D1D8",
     },
-    info: {
-      main: "#42a5f5",
-    },
     background: {
       default: "#F6F8FA",
       paper: "#FFFFFF",
     },
+    info: {
+      main: "#934ae8",
+    },
     success: {
-      main: "#66bb6a",
+      main: "#2e7d32",
     },
     warning: {
       main: "#ff9800",

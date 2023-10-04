@@ -1,5 +1,6 @@
 'use server';
 
+import { HttpClient, Result } from "./http";
 import fromApi, { url } from "./utils";
 
 export interface Product {
@@ -8,6 +9,7 @@ export interface Product {
     price: number,
     stock: number,
     description?: string,
+    discountPercentage: number,
     images?: ProductImage[]
 }
 
@@ -20,15 +22,21 @@ export interface ProductImage {
 }
 
 
+// TODO: how to NOT create this obj on each server action
+export async function prods(): Promise<Result<Product[]>> {
+  const http = new HttpClient(); 
+  const rs: Result<Product[]> = await http
+          .get<Product[]>(fromApi(`/products`), { cache: "no-store" }  )
+  return rs;
+}
 
 
-export async function prodInfo(attr: number | string): Promise<Product> {
+export async function prodInfo(attr: number | string): Promise<Result<Product>> {
   const type: "id" | "name" = typeof attr === "number" ? "id" : "name";
-  const rs = await fetch(fromApi(`/products/${attr}?type=${type}`), {
-    cache: "no-store",
-  });
-  const p: Product = await rs.json();
-  return p;
+  const http = new HttpClient();
+  const rs: Result<Product> = await http
+          .get<Product>(fromApi(`/products/${attr}?type=${type}` ), { cache: "no-store" });
+  return rs;
 }
 
 
@@ -43,7 +51,8 @@ export async function relatedProds(attr: number | string): Promise<Product[]> {
 
 export async function prodImages(attr: number | string): Promise<ProductImage[]> {
   const type: "id" | "name" = typeof attr === "number" ? "id" : "name";
-  const rs = await fetch(url(`/products/${attr}/images`,[{ name: "type", value: type }]), {
+  const rs = await fetch(url(`/products/${attr}/images`,[{ name: "type", value: type }]), 
+                         {
     cache: "no-store",
   });
   const images: ProductImage[] = await rs.json();
@@ -58,4 +67,3 @@ export async function prodImageMain(id: number ): Promise<ProductImage> {
   const image: ProductImage = await rs.json();
   return image
 }
-

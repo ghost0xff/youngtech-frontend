@@ -2,8 +2,9 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Metadata } from "next";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import fromApi from "@/lib/api/utils";
-import { Product } from "@/lib/api/product";
+import { Product, prods } from "@/lib/api/product";
 import { Container } from "@mui/material";
+import { Result } from "@/lib/api/http";
 
 export const metadata: Metadata = {
   title: "YoungTech - Home",
@@ -11,17 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  // TODO: CHANGE CACHING HERE!!!!
-  const rs: Response = await fetch(fromApi("/products"), { cache: "no-store" });
-  // const rs: Response = await fetch(fromApi("/products"), {
-  //   next: { revalidate: 120 },
-  // });
-
-  if (!rs.ok) {
-    console.error("Could not fetch initial products on home page");
+  const prodsRs: Result<Product[]> = await prods();
+  if (prodsRs.error) {
+    console.log("got an error budy");
   }
-  const products: Product[] = await rs.json();
-
+  const products: Product[] = prodsRs.value!;
   return (
     <>
       <Container>

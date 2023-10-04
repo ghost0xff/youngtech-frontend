@@ -67,9 +67,6 @@ export function bodyFromParams(params: Param[]): string {
     const searchParams = new URLSearchParams(); 
     for (let i = 0; i < params.length; i++) {
         const param: Param = params[i];
-
-        // console.log(JSON.stringify(param.value));
-
         searchParams.append(param.name, (param.value));
     }
     return searchParams.toString();
