@@ -43,7 +43,7 @@ export default function ShoppingCartMenuItem({
 }: ShoppingCartMenuItemProps) {
   const menuDestroyer: MU.MenuDestroyer = useContext(CartMenuDestroyerContext);
   const router = useRouter();
-  // const pathname = usePathname();
+  const price = product.discountPercentage > 0 ? (product.price / 100 * product.discountPercentage) : product.price;
   return (
     <>
       <MenuItem
@@ -82,7 +82,7 @@ export default function ShoppingCartMenuItem({
           }
           secondary={
             <Typography variant="body2" sx={{ fontWeight: 600 }}>
-              {`$${product.price}`}{" "}
+              {`$${price}`}{" "}
             </Typography>
           }
         />

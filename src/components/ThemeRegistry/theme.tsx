@@ -33,7 +33,8 @@ const generalTheme = createTheme({
           // scrollbarWidth: 1,
           "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
             backgroundColor: lightScrollbarTrack,
-            width: 9,
+            width: 8,
+            height: 8,
           },
           "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
             borderRadius: 50,
@@ -112,7 +113,9 @@ const lightTheme: Theme = createTheme({
     },
     background: {
       default: "#F6F8FA",
+      // default: "#FFFFFF",
       paper: "#FFFFFF",
+      // paper: "#F6F8FA",
     },
     info: {
       main: "#934ae8",

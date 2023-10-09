@@ -5,26 +5,22 @@ import fromApi from "@/lib/api/utils";
 import {
   Box,
   Breadcrumbs,
-  Button,
-  ButtonGroup,
   Card,
-  CardActions,
   CardContent,
   Chip,
   Link,
   Stack,
   Tooltip,
   Typography,
-  styled,
-  useTheme,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import Image from "next/image";
 import { useState } from "react";
 import { Brand } from "@/lib/api/brand";
 import HomeIcon from "@mui/icons-material/Home";
-import GrainIcon from "@mui/icons-material/Grain";
 import CategoryIcon from "@mui/icons-material/Category";
+import ProductImageBox from "./ProductImageBox";
+import ProductInfoCart from "./ProductInfoCart";
 
 type Props = {
   images: ProductImage[];
@@ -33,32 +29,6 @@ type Props = {
   mainImgId: number;
 };
 
-type StyledBoxProps = {
-  selected?: boolean;
-};
-
-const StyledBox = styled(Box)<StyledBoxProps>(({ theme, selected }) => ({
-  width: "100%",
-  height: "100%",
-  position: "relative",
-  transition: theme.transitions.create(["border-color", "box-shadow"]),
-  border: `1px solid ${
-    theme.palette.mode === "light"
-      ? selected
-        ? theme.palette.secondary.main
-        : "#d3d3d3"
-      : "#30363d"
-  }`,
-  "&:hover": {
-    boxShadow: `0px 0px 0px 1px ${
-      theme.palette.mode === "light"
-        ? "rgba(3, 102, 214, 0.3)"
-        : "rgb(12, 45, 107)"
-    }`,
-    border: `1px solid ${theme.palette.secondary.main}`,
-  },
-}));
-
 export default function ProductInfoGrid({
   images,
   product,
@@ -66,7 +36,7 @@ export default function ProductInfoGrid({
   mainImgId,
 }: Props) {
   const [selectedId, setSelectedId] = useState(mainImgId);
-  const theme = useTheme();
+
   return (
     <>
       <Box
@@ -74,7 +44,6 @@ export default function ProductInfoGrid({
         justifyContent="center"
         alignItems="center"
         marginBottom={3}
-        // marginTop={1}
       >
         <Breadcrumbs aria-label="breadcrumb" sx={{ padding: 1 }}>
           <Link
@@ -93,7 +62,7 @@ export default function ProductInfoGrid({
             underline="hover"
             sx={{ display: "flex", alignItems: "center" }}
             color="inherit"
-            href={`/brands/${brand.name}`}
+            href={`/brand/${brand.name}`}
           >
             <CategoryIcon sx={{ mr: 0.5 }} fontSize="inherit" />
             {brand.name}
@@ -117,7 +86,7 @@ export default function ProductInfoGrid({
         <Grid xs={1}>
           <Stack direction="column" spacing={1}>
             {images.map((img) => (
-              <StyledBox
+              <ProductImageBox
                 key={img.id}
                 height={{ xs: 70 }}
                 width={{ xs: 70 }}
@@ -134,18 +103,18 @@ export default function ProductInfoGrid({
                   alt={product.name}
                   layout="fill"
                 />
-              </StyledBox>
+              </ProductImageBox>
             ))}
           </Stack>
         </Grid>
         <Grid xs={5}>
-          <StyledBox height={{ xs: 500 }} width={{ xs: 500 }}>
+          <ProductImageBox height={{ xs: 500 }} width={{ xs: 500 }}>
             <Image
               src={fromApi(`/products/${product.id}/images/${selectedId}`)}
               alt={product.name}
               layout="fill"
             />
-          </StyledBox>
+          </ProductImageBox>
         </Grid>
         <Grid xs={6}>
           <Card
@@ -163,7 +132,7 @@ export default function ProductInfoGrid({
               >
                 <Chip
                   component={Link}
-                  href={`/brands/${brand.name}`}
+                  href={`/brand/${brand.name}`}
                   label={brand.name}
                   variant="outlined"
                   color="secondary"
@@ -182,23 +151,63 @@ export default function ProductInfoGrid({
                   </Typography>
                 </Grid>
                 <Grid xs={6}>
-                  <Typography
-                    color={product.stock < 10 ? "error.main" : "success.main"}
-                  >
-                    Stock: {product.stock}
-                  </Typography>
-                  <Typography variant="h6">
-                    ₡{product.price.toFixed(0)}
-                  </Typography>
-                  {/* {product.discountPercentage} */}
+                  <Box textAlign="left">
+                    <Typography
+                      color={product.stock < 10 ? "error.main" : "success.main"}
+                    >
+                      Stock: {product.stock}
+                    </Typography>
+                    {product.discountPercentage > 0 ? (
+                      <>
+                        <Typography variant="h5" fontWeight={500}>
+                          ₡
+                          {product.price -
+                            (product.price / 100) * product.discountPercentage}
+                        </Typography>
+
+                        <Typography component="div" variant="caption">
+                          Original:{" "}
+                          <Typography
+                            color="error.main"
+                            sx={{
+                              textDecoration: "line-through",
+                              display: "inline-block",
+                            }}
+                          >
+                            ₡{product.price.toFixed(0)}
+                          </Typography>
+                        </Typography>
+                        <Typography variant="caption">
+                          {"Ahorras: "}
+                          <Typography
+                            sx={{
+                              display: "inline-block",
+                            }}
+                          >
+                            ₡
+                            {(product.price / 100) * product.discountPercentage}
+                            {` (%${product.discountPercentage})`}
+                          </Typography>
+                        </Typography>
+                      </>
+                    ) : (
+                      <Typography variant="h5" fontWeight={500}>
+                        ₡{product.price.toFixed(0)}
+                      </Typography>
+                    )}
+                  </Box>
+                </Grid>
+                <Grid xs={12}>
+                  <ProductInfoCart
+                    productId={product.id}
+                    stock={product.stock}
+                  />
                 </Grid>
               </Grid>
             </CardContent>
-            <CardActions>
-              {/* <Button variant="contained" color="warning" disableElevation>
-                Click me!
-              </Button> */}
-            </CardActions>
+            {/* <CardActions>
+              <Typography>content</Typography>
+            </CardActions> */}
           </Card>
         </Grid>
       </Grid>

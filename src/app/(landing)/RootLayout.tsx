@@ -1,7 +1,5 @@
 "use client";
-
 import { useState, useEffect } from "react";
-import { Roboto } from "next/font/google";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import TopAppBar from "@/components/AppBar/TopAppBar";
 import AuthProvider from "@/components/Auth/AuthProvider";
@@ -14,13 +12,7 @@ import {
 } from "@/components/ShoppingCart/ShoppingCartMenu";
 import { AlertManager, AlertManagerContext } from "@/components/helpers/alert";
 import { AlertColor } from "@mui/material";
-import AppFooter from "@/components/AppFooter/AppFooter";
-
-const roboto = Roboto({
-  variable: "--font-roboto",
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-});
+import { roboto } from "./layout";
 
 export default function RootLayout({
   children,
@@ -100,7 +92,7 @@ export default function RootLayout({
       );
       setUpdate((current) => !current);
     },
-    async removeItem(pid: number, quantity: number) {
+    removeItem(pid: number, quantity: number) {
       removeItem(pid, quantity);
       alertManager.show(
         quantity === 1
@@ -124,18 +116,14 @@ export default function RootLayout({
           <AuthProvider>
             <AlertManagerContext.Provider value={alertManager}>
               <ShoppingCartContext.Provider value={cartManager}>
-                <NavigationLoader />
                 <Box
                   sx={{
                     display: "flex",
-                    flexDirection: "column",
-                    //  ^^^^ never delete this line,
-                    // cost me like 3 hours of straight
-                    // debugging
-                    position: "relative",
+                    position: "relartive",
                     minHeight: "100vh",
                   }}
                 >
+                  <NavigationLoader />
                   <TopAppBar />
                   <Box
                     sx={{
@@ -144,6 +132,7 @@ export default function RootLayout({
                     }}
                   >
                     <Toolbar />
+
                     {children}
                   </Box>
                   {/* <AppFooter /> */}

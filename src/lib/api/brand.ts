@@ -1,6 +1,6 @@
 "use server";
 
-import { HttpClient, Result } from "./http";
+import { HttpClient, } from "./http";
 import fromApi, { url } from "./utils";
 
 export interface Brand {
@@ -8,7 +8,7 @@ export interface Brand {
     name: string,
 }
 
-export async function brandFromProduct(attr: string | number): Promise<Result<Brand>> {
+export async function brandFromProduct(attr: string | number): Promise<Brand | null> {
   const type: "id" | "name" = typeof attr === "number" ? "id" : "name";
   const http = new HttpClient(); 
   const rs = http

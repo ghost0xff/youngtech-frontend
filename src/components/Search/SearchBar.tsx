@@ -15,33 +15,7 @@ import React, { useState } from "react";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
 import SearchSharpIcon from "@mui/icons-material/SearchSharp";
-
-const StyledInput = styled(InputBase)(({ theme }) => ({
-  padding: 10,
-  width: "100%",
-  "& input": {
-    borderRadius: "40px 0 0 40px",
-    backgroundColor: theme.palette.mode === "light" ? "#fff" : "#0d1117",
-    padding: 8.5,
-    paddingLeft: "20px",
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-    border: `1px solid ${
-      theme.palette.mode === "light"
-        ? //   "#eaecef" :
-          "#d3d3d3"
-        : "#30363d"
-    }`,
-    fontSize: 16,
-    "&:focus": {
-      // boxShadow: `0px 0px 0px 1px ${
-      //   theme.palette.mode === "light"
-      //     ? "rgba(3, 102, 214, 0.3)"
-      //     : "rgb(12, 45, 107)"
-      // }`,
-      borderColor: theme.palette.mode === "light" ? "#0366d6" : "#388bfd",
-    },
-  },
-}));
+import StyledInput from "./StyledInput";
 
 export default function SearchBar() {
   const hint = React.useRef("");
@@ -160,7 +134,7 @@ export default function SearchBar() {
 const CustomPaper = (props: any) => {
   return (
     <Paper
-      elevation={1}
+      elevation={3}
       sx={{
         borderRadius: "12px",
       }}

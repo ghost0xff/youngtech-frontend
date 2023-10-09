@@ -1,7 +1,7 @@
 import HorizontalLogo from "@/components/Logo/HorizontalLogo";
 import VerticalLogo from "@/components/Logo/VerticalLogo";
 import SimpleFooter from "@/components/SimpleFooter/SimpleFooter";
-import TopAppBar from "@/components/TopAppBar/TopAppBar";
+import TopAppBar from "@/components/AppBar/TopAppBar";
 import {
   Card,
   CardActions,

@@ -1,3 +1,5 @@
+"use client";
+
 import { Link, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import SimpleFooterLink, { LoginFooterLinkProps } from "./SimpleFooterLink";

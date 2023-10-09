@@ -1,39 +1,48 @@
 "use client";
 
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
-import { Alert, ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-import { ReactNode, useContext } from "react";
+import { ToggleButton, Tooltip } from "@mui/material";
+import { useRef } from "react";
+import { useContext } from "react";
 import { useSafeSession } from "../hooks";
 import { AuthNeederContext, AuthnNeederr } from "../Auth/AuthProvider";
 import { CartItem, addItem, cartItems } from "@/lib/api/cart";
-import { Product } from "@/lib/api/product";
 import {
   CartManager,
   ShoppingCartContext,
 } from "../ShoppingCart/ShoppingCartMenu";
+import { AlertManager, AlertManagerContext } from "../helpers/alert";
+import { LoadingButton } from "@mui/lab";
 
-type CardAction = "add-cart";
 type Props = {
   productId: number;
 };
 
 export default function ProductCardActions({ productId }: Props) {
+  const loading = useRef(false);
   const needer: AuthnNeederr = useContext(AuthNeederContext);
   const { status } = useSafeSession();
   const cartManager: CartManager = useContext(ShoppingCartContext);
   const prodIds: number[] = cartManager.prodIds();
 
   const handleChange = async function () {
+    loading.current = true;
+    console.log(`adding ${loading.current}`);
+
     if (status === "unauthenticated") {
       needer.need();
+      loading.current = false;
+      console.log(`adding ${loading.current}`);
       return;
     }
     if (!prodIds.includes(productId)) {
-      cartManager.addItem(productId, 1);
+      await cartManager.addItem(productId, 1);
+      loading.current = false;
+      console.log(`adding ${loading.current}`);
     } else {
-      cartManager.removeItem(productId, 1);
+      await cartManager.removeItem(productId, 1);
+      loading.current = false;
+      console.log(`adding ${loading.current}`);
     }
   };
 
@@ -46,15 +55,24 @@ export default function ProductCardActions({ productId }: Props) {
             : "Agregar al carrito"
         }
       >
-        <ToggleButton
-          value="add-cart"
-          selected={prodIds.includes(productId)}
-          onChange={handleChange}
-          color="secondary"
+        <LoadingButton
+          onClick={() => handleChange()}
+          loading={loading.current}
+          disableElevation
+          variant="outlined"
+          color={prodIds.includes(productId) ? "secondary" : "inherit"}
+          sx={{
+            color: prodIds.includes(productId) ? "secondary.main" : "GrayText",
+            borderColor: prodIds.includes(productId)
+              ? "secondary.main"
+              : "#c1bfbf",
+            // c1bfbf
+            minWidth: 20,
+            minHeight: 45,
+          }}
         >
-          {/* <ShoppingBagIcon /> */}
           <ShoppingBagOutlinedIcon />
-        </ToggleButton>
+        </LoadingButton>
       </Tooltip>
     </>
   );

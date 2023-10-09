@@ -18,12 +18,29 @@ import { CartMenuDestroyerContext } from "./ShoppingCartMenu";
 import { useContext } from "react";
 import ShoppingCartMenuItem from "./ShoppingCartMenuItem";
 import { MenuUtils as MU } from "../utils";
-import { CartItem, calcTotal } from "@/lib/api/cart";
+import { CartItem } from "@/lib/api/cart";
 
 type Props = {
   items: CartItem[];
   onClickRemove(id: number): void;
 };
+
+function calcTotal(items: CartItem[]): Promise<number> {
+  let total = 0;
+  for (let index = 0; index < items.length; index++) {
+    const item = items[index];
+    const prod: Product = item.product;
+    let price = prod.price;
+    if (prod.discountPercentage > 0) {
+      price -= (prod.price / 100) * prod.discountPercentage;
+    }
+    total += price * item.quantity;
+  }
+  return total;
+}
+
+
+
 export default function ShoppingCartMenuList({
   items,
   onClickRemove: handleClickRemove,
@@ -31,12 +48,13 @@ export default function ShoppingCartMenuList({
   const theme: Theme = useTheme();
   const menuDestroyer: MU.MenuDestroyer = useContext(CartMenuDestroyerContext);
 
-  const totalPrice: string = items
-    .reduce(
-      (prev, current) => prev + current.product.price * current.quantity,
-      0
-    )
-    .toFixed(2);
+  // const totalPrice: string = items
+  //   .reduce(
+  //     (prev, current) => prev + current.product.price * current.quantity,
+  //     0
+  //   )
+  //   .toFixed(2);
+  const totalPrice = calcTotal(items);
 
   return (
     <MenuList

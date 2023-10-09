@@ -17,8 +17,8 @@ export interface ItemsSetter {
 export interface CartManager {
   prodIds(): number[];
   items(): CartItem[];
-  addItem(prodId: number, quantity: number): void;
-  removeItem(prodId: number, quantity: number): void;
+  addItem(prodId: number, quantity: number): Promise<void>;
+  removeItem(prodId: number, quantity: number): Promise<void>;
 }
 export const ShoppingCartContext = createContext<CartManager>({
   prodIds() {
@@ -27,8 +27,8 @@ export const ShoppingCartContext = createContext<CartManager>({
   items() {
     return [];
   },
-  addItem(pid: number, quantity: number) {},
-  removeItem(pid: number, quantity: number) {},
+  async addItem(pid: number, quantity: number) {},
+  async removeItem(pid: number, quantity: number) {},
 });
 
 export const CartMenuDestroyerContext = createContext<MU.MenuDestroyer>({

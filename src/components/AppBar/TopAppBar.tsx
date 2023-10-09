@@ -54,7 +54,6 @@ export default function TopAppBar() {
       >
         <Toolbar
           sx={{
-            display: { xs: "none", sm: "flex" },
             alignItems: "center",
             justifyContent: "space-between",
           }}
@@ -109,17 +108,6 @@ export default function TopAppBar() {
               <OptionsMenu />
             </AuthLoader>
           </Stack>{" "}
-        </Toolbar>
-
-        <Toolbar
-          sx={{
-            display: { xs: "flex", sm: "none" },
-          }}
-        >
-          {" "}
-          <Box component="div" sx={{ lineHeight: 0, flexGrow: 1 }}>
-            <HorizontalLogo />
-          </Box>
         </Toolbar>
         <Divider />
       </AppBar>

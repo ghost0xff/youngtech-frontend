@@ -26,7 +26,8 @@ export default function FilteringDrawer() {
           display: { xs: "none", sm: "block" },
         }}
         variant="permanent"
-        anchor="top"
+        anchor="left"
+        // elevation={1}
       >
         <Box sx={{ paddingTop: "64px" }}>
           {/* <Accordion elevation={0}>

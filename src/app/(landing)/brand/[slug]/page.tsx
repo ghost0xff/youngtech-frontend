@@ -14,7 +14,7 @@ export async function generateMetadata(
   };
 }
 
-export default async function ProductPage({
+export default async function BrandPage({
   params,
 }: {
   params: { slug: string };
