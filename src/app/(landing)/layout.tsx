@@ -143,6 +143,7 @@ export default function RootLayout({
                       p: 2.5,
                     }}
                   >
+                    <Toolbar sx={{ display: { xs: "flex", sm: "none" } }} />
                     <Toolbar />
                     {children}
                   </Box>

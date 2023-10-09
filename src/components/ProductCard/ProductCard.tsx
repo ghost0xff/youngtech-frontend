@@ -53,17 +53,21 @@ SHOW DISCOUNT HERE!!!!!!!!!!
 */
 
 export default function ProductCard({ product }: Props) {
+  const hasDiscount = product.discountPercentage > 0;
   return (
     // <ProductImageBox>
     <Card
       variant="outlined"
       sx={{
         width: {
-          xs: 180,
+          // xs: 180,
+          // xs: 300,
+          xs: "100%",
           sm: 250,
         },
         height: {
-          xs: 210,
+          // xs: 210,
+          xs: 280,
           sm: 280,
         },
       }}
@@ -74,7 +78,8 @@ export default function ProductCard({ product }: Props) {
           // height={170}
           sx={{
             height: {
-              xs: 100,
+              // xs: 100,
+              xs: 170,
               sm: 170,
               md: 170,
             },
@@ -114,8 +119,23 @@ export default function ProductCard({ product }: Props) {
           alignItems: "center",
         }}
       >
-        <Typography variant="h6" sx={{ fontWeight: 600 }}>
-          ₡{product.price.toFixed(2)}
+        <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
+          ₡
+          {hasDiscount
+            ? product.price - (product.price / 100) * product.discountPercentage
+            : product.price}{" "}
+          {hasDiscount && (
+            <Typography
+              variant="caption"
+              color="error.main"
+              sx={{
+                textDecoration: "line-through",
+                display: "inline-block",
+              }}
+            >
+              ₡{product.price.toFixed(0)}
+            </Typography>
+          )}
         </Typography>
         <ProductCardActions productId={product.id} />
       </CardActions>

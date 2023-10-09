@@ -52,7 +52,7 @@ export default function ProductInfoCart({ stock, productId }: Props) {
         options={options}
         color="secondary.main"
         handleHomeEndKeys
-        isOptionEqualToValue={(option, value) => option === value}
+        isOptionEqualToValue={(option, value) => true}
         clearOnBlur
         selectOnFocus
         disableClearable

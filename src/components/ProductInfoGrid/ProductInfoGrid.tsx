@@ -101,7 +101,7 @@ export default function ProductInfoGrid({
                   }}
                   src={fromApi(`/products/${product.id}/images/${img.id}`)}
                   alt={product.name}
-                  layout="fill"
+                  fill
                 />
               </ProductImageBox>
             ))}
@@ -112,7 +112,7 @@ export default function ProductInfoGrid({
             <Image
               src={fromApi(`/products/${product.id}/images/${selectedId}`)}
               alt={product.name}
-              layout="fill"
+              fill
             />
           </ProductImageBox>
         </Grid>

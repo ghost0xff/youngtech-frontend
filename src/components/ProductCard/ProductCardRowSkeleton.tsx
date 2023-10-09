@@ -12,7 +12,7 @@ export default function ProductCartRowSkeleton({ quantity }: Props) {
   const elems = [];
   for (let index = 0; index < quantity; index++) {
     elems.push(
-      <Grid2>
+      <Grid2 sx={index === 3 ? { display: { md: "none", lg: "block" } } : {}}>
         <ProductCardSkeleton />
       </Grid2>
     );

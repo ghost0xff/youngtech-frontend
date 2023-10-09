@@ -32,9 +32,9 @@ export default function ProductsSwiper({ products }: Props) {
             }
           }
           breakpoints={{
-            300: { slidesPerView: 2, spaceBetween: 60 },
-            360: { slidesPerView: 2, spaceBetween: 80 },
-            400: { slidesPerView: 2, spaceBetween: 40 },
+            300: { slidesPerView: 1, spaceBetween: 40 },
+            360: { slidesPerView: 1, spaceBetween: 40 },
+            400: { slidesPerView: 1, spaceBetween: 40 },
             500: { slidesPerView: 2, spaceBetween: 10 },
             600: { slidesPerView: 2 },
             900: { slidesPerView: 3 },

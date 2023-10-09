@@ -12,7 +12,7 @@ export default function ProductCardSkeleton() {
           width: {
             xs: 300,
             sm: 240,
-            md: 265,
+            md: 260,
             lg: 265,
             xl: 265,
           },

@@ -52,8 +52,10 @@ export default function TopAppBar() {
           // zIndex: (theme: Theme) => theme.zIndex.drawer + 1,
         }}
       >
+        {/* <Toolbar sx={{``}}> */}
         <Toolbar
           sx={{
+            flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
           }}
@@ -67,8 +69,16 @@ export default function TopAppBar() {
           >
             <HorizontalLogo />
           </Box>
-          <SearchBar />
-          <Stack direction="row" spacing={3}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              maxWidth: 700,
+              display: { xs: "none", sm: "block" },
+            }}
+          >
+            <SearchBar />
+          </Box>
+          <Stack direction="row" spacing={2}>
             <AuthLoader
               loader={
                 <>
@@ -108,6 +118,11 @@ export default function TopAppBar() {
               <OptionsMenu />
             </AuthLoader>
           </Stack>{" "}
+          {/* </Toolbar> */}
+        </Toolbar>
+
+        <Toolbar sx={{ display: { xs: "flex", sm: "none" } }}>
+          <SearchBar />
         </Toolbar>
         <Divider />
       </AppBar>
