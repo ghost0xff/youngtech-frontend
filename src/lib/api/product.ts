@@ -8,7 +8,7 @@ export interface Product {
     name: string,
     price: number,
     stock: number,
-    description?: string,
+    description: string,
     discountPercentage: number,
     images?: ProductImage[]
 }
@@ -20,6 +20,8 @@ export interface ProductImage {
     mimeType?: string,
     sizeInBytes?: number
 }
+
+
 
 
 // TODO: how to NOT create this obj on each server action
@@ -70,4 +72,40 @@ export async function prodImageMain(id: number ): Promise<ProductImage> {
   });
   const image: ProductImage = await rs.json();
   return image
+}
+
+
+export async function searchProdsByTerm(term: string): Promise<Product[]> {
+  const products: Product[] = [
+    {
+      id: 3,
+      price: 12000,
+      stock: 1,
+      name: "Teclado corsarir carecimba",
+      description: "una descripcion bien MAMALONAAAAAAAAA, dale papu! pene",
+      discountPercentage: 234
+    },
+    {
+      id: 15,
+      price: 50000,
+      stock: 5, 
+      discountPercentage: 0,
+      name: "laptop",
+      description:
+        "Viva la facha mamus  " +
+        "laptop para leer la biblio lul lul, demasiado panardela mi pana, LOL LOL LOL, pene ",
+    },
+    {
+      id: 16,
+      price: 120000,
+      stock: 10,
+      discountPercentage: 12,
+      name: "keyboard/teclado carechimba",
+      description:
+        "Tecladito fachero y pequenito para jugar al valorant con los panardosss, pene, viva la grasa mamus " +
+        "keyboard fachero y pequenito para jugar al valorant con los panardosss, viva la grasa mamus " +
+        "Tecayyo fachero y pequenito para jugar al valorant con los panardosss, viva la grasa mamus",
+    },
+  ];
+  return products
 }

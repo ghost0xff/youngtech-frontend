@@ -43,7 +43,7 @@ export default function RootLayout({
       setProductIds(prodIds);
       return;
     } else {
-      console.log("items are null");
+      // console.log("items are null");
       return;
     }
   }
@@ -101,7 +101,32 @@ export default function RootLayout({
       setUpdate((current) => !current);
     },
     async removeItem(pid: number, quantity: number) {
-      removeItem(pid, quantity);
+      const item: CartItem | undefined = items.find(
+        (i) => i.product.id === pid
+      );
+      if (!item) {
+        alertManager.show(
+          "No puedes eliminar algo que no tienes",
+          "error",
+          3000
+        );
+        return;
+      } else {
+        if (quantity > item.quantity) {
+          alertManager.show(
+            `Solo tienes ${item.quantity} de estos en el carrito!`,
+            "error",
+            4000
+          );
+          return;
+        }
+      }
+      try {
+        await removeItem(pid, quantity);
+      } catch {
+        alertManager.show("Ha ocurrido un error", "error", 5000);
+        return;
+      }
       alertManager.show(
         quantity === 1
           ? "Se ha removido un item del carrito"

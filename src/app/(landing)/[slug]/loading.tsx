@@ -4,18 +4,26 @@ import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 
 export default function Loading() {
   return (
-    <Container>
+    <Container fixed>
       <Box
         display="flex"
         justifyContent="center"
         alignItems="center"
         marginBottom={3}
       >
-        <Skeleton width={350} animation={false} sx={{ fontSize: "1.2rem" }} />
+        <Skeleton
+          animation={false}
+          sx={{ fontSize: "1.2rem", width: { xs: "60%", sm: "40%" } }}
+        />
       </Box>
-      <Grid container spacing={10}>
-        <Grid xs={1}>
-          <Stack direction="column" spacing={1}>
+      <Grid container spacing={2}>
+        <Grid xs={12} md={1}>
+          <Stack
+            direction={{ xs: "row", md: "column" }}
+            alignItems={{ xs: "flex-start", md: "center" }}
+            justifyContent="center"
+            spacing={1}
+          >
             <Skeleton
               variant="rounded"
               width={70}
@@ -42,15 +50,38 @@ export default function Loading() {
             />
           </Stack>
         </Grid>
-        <Grid xs={5}>
+        <Grid
+          xs={12}
+          sm={6}
+          md={6}
+          lg={5}
+          // sx={{
+          //   display: {
+          //     sx: "flex",
+          //   },
+          //   alignItems: {
+          //     sx: "center",
+          //   },
+          //   justifyContent: {
+          //     sx: "center",
+          //   },
+          // }}
+          alignItems={{ sx: "center" }}
+          justifyContent="center"
+          display="flex"
+        >
           <Skeleton
             variant="rounded"
-            width={500}
-            height={500}
             animation={false}
+            sx={{
+              width: { xs: 300, sm: 360, md: 420, lg: 470, xl: 460 },
+              height: { xs: 300, sm: 360, md: 420, lg: 470, xl: 460 },
+              // height: "100%",
+              // width: "100%",
+            }}
           />
         </Grid>
-        <Grid xs={6}>
+        <Grid xs={12} sm={6} md={5} lg={6}>
           <Card
             elevation={0}
             sx={{
@@ -100,7 +131,14 @@ export default function Loading() {
                       height={35}
                       variant="rounded"
                     />
+                    <Skeleton
+                      animation={false}
+                      width={60}
+                      height={35}
+                      variant="rounded"
+                    />
                   </Stack>
+                  <Skeleton animation={false} width="20%" />
                 </Grid>
               </Grid>
             </CardContent>

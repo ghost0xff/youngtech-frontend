@@ -73,7 +73,7 @@ export async function addItem(productId: number, quantity: number): Promise<Cart
   throw Error(CartErrors.NotLoggedIn)
 }
 
-export async function removeItem(productId: number, quantity: number) {
+export async function removeItem(productId: number, quantity: number): Promise<void> {
   const session: Session | null = await getSafeServerSession();
   if(session) {
     const accessToken = session.user.accessToken;

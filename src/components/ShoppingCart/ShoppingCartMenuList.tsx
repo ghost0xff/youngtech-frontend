@@ -19,13 +19,13 @@ import { useContext } from "react";
 import ShoppingCartMenuItem from "./ShoppingCartMenuItem";
 import { MenuUtils as MU } from "../utils";
 import { CartItem } from "@/lib/api/cart";
+import { Product } from "@/lib/api/product";
 
 type Props = {
   items: CartItem[];
-  onClickRemove(id: number): void;
 };
 
-function calcTotal(items: CartItem[]): Promise<number> {
+function calcTotal(items: CartItem[]): number {
   let total = 0;
   for (let index = 0; index < items.length; index++) {
     const item = items[index];
@@ -39,12 +39,7 @@ function calcTotal(items: CartItem[]): Promise<number> {
   return total;
 }
 
-
-
-export default function ShoppingCartMenuList({
-  items,
-  onClickRemove: handleClickRemove,
-}: Props) {
+export default function ShoppingCartMenuList({ items }: Props) {
   const theme: Theme = useTheme();
   const menuDestroyer: MU.MenuDestroyer = useContext(CartMenuDestroyerContext);
 
@@ -76,10 +71,7 @@ export default function ShoppingCartMenuList({
             <Tooltip title="Ir a checkout" placement="right">
               <Link href="/checkout" onClick={menuDestroyer.destroy}>
                 <IconButton>
-                  <ShoppingCartCheckoutOutlinedIcon
-                    // color="inherit"
-                    fontSize="medium"
-                  />
+                  <ShoppingCartCheckoutOutlinedIcon fontSize="medium" />
                 </IconButton>
               </Link>
             </Tooltip>
@@ -92,7 +84,6 @@ export default function ShoppingCartMenuList({
           <ShoppingCartMenuItem
             product={item.product}
             quantity={item.quantity}
-            onClickRemove={handleClickRemove}
           />
           {index < items.length - 1 && <Divider />}
         </span>

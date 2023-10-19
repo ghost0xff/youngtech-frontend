@@ -18,6 +18,7 @@ const ProductImageBox = styled(Box)<StyledBoxProps>(({ theme, selected }) => ({
         : "#d3d3d3"
       : "#30363d"
   }`,
+  // ? theme.palette.secondary.main
   "&:hover": {
     boxShadow: `0px 0px 0px 1px ${
       theme.palette.mode === "light"

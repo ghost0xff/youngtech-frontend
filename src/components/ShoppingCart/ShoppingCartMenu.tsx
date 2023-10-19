@@ -10,9 +10,6 @@ import { MenuUtils as MU } from "../utils";
 import ShoppingCartSharpIcon from "@mui/icons-material/ShoppingCartSharp";
 import { CartItem } from "@/lib/api/cart";
 
-export interface ItemsSetter {
-  set(items: CartItem[]): void;
-}
 
 export interface CartManager {
   prodIds(): number[];
@@ -20,6 +17,7 @@ export interface CartManager {
   addItem(prodId: number, quantity: number): Promise<void>;
   removeItem(prodId: number, quantity: number): Promise<void>;
 }
+
 export const ShoppingCartContext = createContext<CartManager>({
   prodIds() {
     return [];

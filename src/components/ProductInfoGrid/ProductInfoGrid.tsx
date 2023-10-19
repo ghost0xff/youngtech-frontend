@@ -6,6 +6,7 @@ import {
   Box,
   Breadcrumbs,
   Card,
+  CardActions,
   CardContent,
   Chip,
   Link,
@@ -13,14 +14,25 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Brand } from "@/lib/api/brand";
 import HomeIcon from "@mui/icons-material/Home";
 import CategoryIcon from "@mui/icons-material/Category";
 import ProductImageBox from "./ProductImageBox";
 import ProductInfoCart from "./ProductInfoCart";
+
+// Import Swiper React components
+import { Navigation, A11y, Pagination, Zoom } from "swiper/modules";
+import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/zoom";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+// import "swiper/css/scrollbar";
 
 type Props = {
   images: ProductImage[];
@@ -36,61 +48,38 @@ export default function ProductInfoGrid({
   mainImgId,
 }: Props) {
   const [selectedId, setSelectedId] = useState(mainImgId);
+  const [swiper, setSwiper] = useState<SwiperClass | null>(null);
+  const slideTo = (index: number) => swiper && swiper.slideTo(index);
+
+  useEffect(
+    function () {
+      slideTo(images.findIndex((i) => i.main));
+    },
+    [swiper]
+  );
 
   return (
     <>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        marginBottom={3}
-      >
-        <Breadcrumbs aria-label="breadcrumb" sx={{ padding: 1 }}>
-          <Link
-            underline="hover"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-            color="inherit"
-            href="/"
+      <Grid container spacing={2}>
+        <Grid xs={12} md={1}>
+          <Stack
+            direction={{ xs: "row", md: "column" }}
+            spacing={1}
+            alignItems={{ xs: "flex-start", md: "center" }}
+            justifyContent="center"
           >
-            <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-            Home
-          </Link>
-          <Link
-            underline="hover"
-            sx={{ display: "flex", alignItems: "center" }}
-            color="inherit"
-            href={`/brand/${brand.name}`}
-          >
-            <CategoryIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-            {brand.name}
-          </Link>
-          <Link
-            underline="hover"
-            sx={{ display: "flex", alignItems: "center" }}
-            color="inherit"
-            href="#"
-          >
-            <Typography
-              sx={{ display: "flex", alignItems: "center" }}
-              color="secondary.main"
-            >
-              {product.name}
-            </Typography>
-          </Link>
-        </Breadcrumbs>
-      </Box>
-      <Grid container spacing={10}>
-        <Grid xs={1}>
-          <Stack direction="column" spacing={1}>
             {images.map((img) => (
               <ProductImageBox
                 key={img.id}
                 height={{ xs: 70 }}
                 width={{ xs: 70 }}
                 selected={selectedId === img.id}
+                // selected
+                onClick={function () {
+                  const s = images.findIndex((e) => e.id === img.id);
+                  slideTo(s);
+                  setSelectedId(img.id);
+                }}
               >
                 <Image
                   onDragStart={function (e) {
@@ -102,21 +91,78 @@ export default function ProductInfoGrid({
                   src={fromApi(`/products/${product.id}/images/${img.id}`)}
                   alt={product.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </ProductImageBox>
             ))}
           </Stack>
         </Grid>
-        <Grid xs={5}>
-          <ProductImageBox height={{ xs: 500 }} width={{ xs: 500 }}>
-            <Image
-              src={fromApi(`/products/${product.id}/images/${selectedId}`)}
-              alt={product.name}
-              fill
-            />
-          </ProductImageBox>
+        <Grid xs={12} sm={6} md={6} lg={5}>
+          <Swiper
+            modules={[Navigation, A11y, Pagination, Zoom]}
+            zoom
+            navigation
+            pagination={{ clickable: true }}
+            breakpoints={{
+              300: { slidesPerView: 1 },
+              360: { slidesPerView: 1 },
+              400: { slidesPerView: 1 },
+              500: { slidesPerView: 1 },
+              600: { slidesPerView: 1 },
+              900: { slidesPerView: 1 },
+              1200: { slidesPerView: 1 },
+              1536: { slidesPerView: 1 },
+            }}
+            onSwiper={(swiper) => {
+              setSwiper(swiper);
+              slideTo(images.findIndex((i) => i.main));
+            }}
+            onActiveIndexChange={function (swiper: SwiperClass) {
+              const matching = images.filter(
+                (img, index) => index === swiper.activeIndex
+              );
+              setSelectedId(matching[0].id);
+            }}
+          >
+            {images.map((img) => (
+              <SwiperSlide key={img.id}>
+                <ProductImageBox
+                  // height={{ xs: 310, sm: 360, md: 450, lg: 470, xl: 460 }}
+                  // width={{ xs: 310, sm: 360, md: 450, lg: 470, xl: 460 }}
+                  height={{ xs: 310, sm: 360, md: 410, lg: 460, xl: 460 }}
+                  width={{ xs: 310, sm: 360, md: 410, lg: 460, xl: 460 }}
+                  alignItems={{ sx: "center" }}
+                  justifyContent="center"
+                  display="flex"
+                  className="swiper-zoom-container"
+                >
+                  <Box className="swiper-zoom-container" position={"relative"}>
+                    <Image
+                      onDragStart={function (e) {
+                        e.preventDefault();
+                      }}
+                      src={fromApi(`/products/${product.id}/images/${img.id}`)}
+                      alt={product.name}
+                      fill
+                    />
+                  </Box>
+                </ProductImageBox>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="caption" marginY={1} color="GrayText">
+              Doble tap para hacer zoom
+            </Typography>
+          </Box>
         </Grid>
-        <Grid xs={6}>
+        <Grid xs={12} sm={6} md={5} lg={6}>
           <Card
             elevation={0}
             sx={{
@@ -141,7 +187,7 @@ export default function ProductInfoGrid({
                 />
               </Tooltip>
               <Grid container spacing={2} sx={{ marginTop: 1 }}>
-                <Grid xs={6}>
+                <Grid xs={12} md={6}>
                   <Typography
                     variant="body2"
                     color="text.secondary"
@@ -150,7 +196,7 @@ export default function ProductInfoGrid({
                     {product.description}
                   </Typography>
                 </Grid>
-                <Grid xs={6}>
+                <Grid xs={12} md={6}>
                   <Box textAlign="left">
                     <Typography
                       color={product.stock < 10 ? "error.main" : "success.main"}

@@ -5,7 +5,6 @@ import {
   Badge,
   BadgeProps,
   IconButton,
-  Link,
   ListItemAvatar,
   ListItemText,
   MenuItem,
@@ -16,14 +15,18 @@ import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCa
 import { Product } from "@/lib/api/product";
 import fromApi from "@/lib/api/utils";
 import { MenuUtils as MU } from "../utils";
-import { useContext, useEffect } from "react";
-import { CartMenuDestroyerContext } from "./ShoppingCartMenu";
-import { usePathname, useRouter } from "next/navigation";
+import { useContext, useRef } from "react";
+import {
+  CartManager,
+  CartMenuDestroyerContext,
+  ShoppingCartContext,
+} from "./ShoppingCartMenu";
+import { useRouter } from "next/navigation";
+import { LoadingButton } from "@mui/lab";
 
 type ShoppingCartMenuItemProps = {
   product: Product;
   quantity: number;
-  onClickRemove(id: number): void;
 };
 
 const SideBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
@@ -39,11 +42,15 @@ const SideBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 export default function ShoppingCartMenuItem({
   product,
   quantity,
-  onClickRemove: handleClickRemove,
 }: ShoppingCartMenuItemProps) {
+  const cartManager: CartManager = useContext(ShoppingCartContext);
   const menuDestroyer: MU.MenuDestroyer = useContext(CartMenuDestroyerContext);
   const router = useRouter();
-  const price = product.discountPercentage > 0 ? (product.price / 100 * product.discountPercentage) : product.price;
+  const price =
+    product.discountPercentage > 0
+      ? product.price - (product.price / 100) * product.discountPercentage
+      : product.price;
+  const loading = useRef(false);
   return (
     <>
       <MenuItem
@@ -52,16 +59,11 @@ export default function ShoppingCartMenuItem({
           router.push(`/${product.name}`);
           menuDestroyer.destroy();
         }}
-        // sx={{
-        //   ":hover": {
-        //     bgcolor: "inherit",
-        //   },
-        // }}
       >
         <ListItemAvatar>
           <SideBadge
             badgeContent={`${quantity}`}
-            color="warning"
+            color="secondary"
             anchorOrigin={{
               vertical: "top",
               horizontal: "left",
@@ -82,19 +84,33 @@ export default function ShoppingCartMenuItem({
           }
           secondary={
             <Typography variant="body2" sx={{ fontWeight: 600 }}>
-              {`$${price}`}{" "}
+              {`₡${price}`}{" "}
             </Typography>
           }
         />
-        <IconButton
-          onClick={(event) => {
-            event.stopPropagation();
-            handleClickRemove(product.id);
+        <LoadingButton
+          onClick={async (e) => {
+            e.stopPropagation();
+            loading.current = true;
+            await cartManager.removeItem(product.id, 1);
+            loading.current = false;
+          }}
+          loading={loading.current}
+          disableElevation
+          size="small"
+          sx={{
+            minWidth: "40px",
+            padding: 1.2,
+            color: "error.main",
           }}
         >
-          <RemoveShoppingCartOutlinedIcon color="error" fontSize="small" />
-        </IconButton>
+          <RemoveShoppingCartOutlinedIcon />
+        </LoadingButton>
       </MenuItem>
     </>
   );
+}
+
+function sleep(delayMilis: number) {
+  return new Promise((resolve) => setTimeout(resolve, delayMilis));
 }

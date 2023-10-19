@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { SxProps, Typography } from "@mui/material";
 import { Variant } from "@mui/material/styles/createTypography";
 import { ReactNode } from "react";
 
@@ -8,13 +8,13 @@ export default function TextWithEllipsis({
   lines,
   variant,
   color,
-  // component,
   children,
+  sx,
 }: {
-  lines?: number | string;
   variant: Variant;
+  sx?: SxProps;
+  lines?: number | string;
   color?: "primary" | "secondary";
-  // component?: React.ElementType;
   children: ReactNode;
 }) {
   return (
@@ -29,6 +29,8 @@ export default function TextWithEllipsis({
           display: "-webkit-box",
           WebkitLineClamp: lines || "3",
           WebkitBoxOrient: "vertical",
+          mt: 0,
+          ...sx,
         }}
         fontSize={12}
       >

@@ -65,6 +65,10 @@ const accessControl: AccessControl = {
             path: "/orders",
             roles: ["ROLE_CUSTOMER"]
         },
+        {
+            path: "/checkout",
+            roles: ["ROLE_CUSTOMER"]
+        },
         // {
         //     path: "/settings",
         //     roles: ["ROLE_CUSTOMER"]

@@ -11,11 +11,11 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import dynamic from "next/dynamic";
 import ProductCartRowSkeleton from "@/components/ProductCard/ProductCardRowSkeleton";
+import BreadcrumbsNavigation from "@/components/BreadcrumbsNavigation/BreadcrumbsNavigation";
 
 const DynamicCategoryRow = dynamic(
   () => import("@/components/Category/CategoryRow"),
   {
-    // loading: () => <p>Loading...</p>,
     loading: () => <ProductCartRowSkeleton quantity={4} />,
     ssr: false,
   }
@@ -23,7 +23,7 @@ const DynamicCategoryRow = dynamic(
 
 export const metadata: Metadata = {
   title: "YoungTech - Home",
-  description: "A minimalist E-commerce",
+  description: "A mordern E-Commerce to buy the newest tech",
 };
 
 export default async function HomePage() {
@@ -98,22 +98,15 @@ export default async function HomePage() {
   return (
     <>
       <Container fixed>
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <Breadcrumbs aria-label="breadcrumb" sx={{ padding: 1 }}>
-            <Link
-              underline="hover"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-              color="inherit"
-              href="/"
-            >
-              <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-              Home
-            </Link>
-          </Breadcrumbs>
-        </Box>
+        <BreadcrumbsNavigation
+          routes={[
+            {
+              href: "/",
+              icon: <HomeIcon fontSize="inherit" />,
+              label: "Home",
+            },
+          ]}
+        />
 
         <Stack spacing={5}>
           <DynamicCategoryRow

@@ -42,6 +42,7 @@ export default function ProductsSwiper({ products }: Props) {
             1536: { slidesPerView: 4 },
           }}
           modules={[Navigation, A11y]}
+          // onSwiper={(swiper) => swiper.activeIndex}
         >
           {products.map((p) => (
             <SwiperSlide key={p.id}>

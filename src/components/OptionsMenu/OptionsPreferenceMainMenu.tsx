@@ -15,10 +15,10 @@ import { useState } from "react";
 import { signOut } from "next-auth/react";
 import { useSafeSession } from "../hooks";
 import { AuthLoader } from "../Auth/AuthLoader";
-import SwitchAccountSharpIcon from "@mui/icons-material/SwitchAccountSharp";
 import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import TranslateSharpIcon from "@mui/icons-material/TranslateSharp";
 import LanguageSharpIcon from "@mui/icons-material/LanguageSharp";
+import ShoppingCartCheckoutSharpIcon from "@mui/icons-material/ShoppingCartCheckoutSharp";
 
 type OptPrefMainMenuProps = {
   onChangeMenu(option: MenuOption): void;
@@ -71,14 +71,14 @@ export default function OptionsPreferenceMainMenu({
           icon={<ShoppingBagOutlinedIcon />}
           label="Ordenes y compras"
         />
-        <OptionsMenuInteractive
-          icon={<SwitchAccountSharpIcon />}
-          label="Cambiar de cuenta"
-          showArrow
+        <OptionsMenuLink
+          href="/checkout"
+          label="Checkout"
+          icon={<ShoppingCartCheckoutSharpIcon />}
         />
 
         <OptionsMenuInteractive
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={() => signOut()}
           icon={<LoginSharpIcon />}
           label="Salir"
         />
