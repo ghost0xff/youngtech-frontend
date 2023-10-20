@@ -94,3 +94,22 @@ export async function removeItem(productId: number, quantity: number): Promise<v
 }
 
 
+
+export async function removeItemCompletely(productId: number): Promise<void> {
+  const session: Session | null = await getSafeServerSession();
+  if(session) {
+    const accessToken = session.user.accessToken;
+      const apiUrl =  url("/shopping-cart/items/all", [
+          {name: "pid", value: productId.toString()},
+      ]);
+      const http = new HttpClient();
+      const rs = await http.delete(apiUrl, {
+        cache: "no-store",
+        headers: {
+           "Authorization": `Bearer ${accessToken}`
+        },
+      });
+    return
+  }
+  throw Error(CartErrors.NotLoggedIn)
+}

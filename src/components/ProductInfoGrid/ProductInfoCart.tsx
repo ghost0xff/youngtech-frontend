@@ -44,18 +44,22 @@ export default function ProductInfoCart({ stock, productId }: Props) {
     options.push(index.toString());
   }
 
-  async function handleClickAdd(fromAddCartButton?: true) {
+  async function handleClickAdd(fromBuyNowButton?: boolean) {
     loading.current = true;
-    if (quantity <= 0 && !fromAddCartButton) {
+    if (item && item?.quantity > 0 && fromBuyNowButton) {
       loading.current = false;
       return;
     }
-    if (fromAddCartButton && item) {
+    if (fromBuyNowButton && quantity === 0) {
+      await cartManager.addItem(productId, 1);
       loading.current = false;
       return;
     }
-
-    await cartManager.addItem(productId, fromAddCartButton ? 1 : quantity);
+    if (quantity <= 0) {
+      loading.current = false;
+      return;
+    }
+    await cartManager.addItem(productId, quantity);
     loading.current = false;
   }
 

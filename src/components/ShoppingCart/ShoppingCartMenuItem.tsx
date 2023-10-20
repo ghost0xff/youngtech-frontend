@@ -23,21 +23,12 @@ import {
 } from "./ShoppingCartMenu";
 import { useRouter } from "next/navigation";
 import { LoadingButton } from "@mui/lab";
+import SideBadge from "../helpers/SideBadge";
 
 type ShoppingCartMenuItemProps = {
   product: Product;
   quantity: number;
 };
-
-const SideBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    // right: -3,
-    left: -3,
-    top: 13,
-    border: `2px solid ${theme.palette.background.paper}`,
-    padding: "0 4px",
-  },
-}));
 
 export default function ShoppingCartMenuItem({
   product,
@@ -109,8 +100,4 @@ export default function ShoppingCartMenuItem({
       </MenuItem>
     </>
   );
-}
-
-function sleep(delayMilis: number) {
-  return new Promise((resolve) => setTimeout(resolve, delayMilis));
 }

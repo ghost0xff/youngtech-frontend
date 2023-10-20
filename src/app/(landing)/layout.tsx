@@ -7,7 +7,13 @@ import TopAppBar from "@/components/AppBar/TopAppBar";
 import AuthProvider from "@/components/Auth/AuthProvider";
 import { Alert, Box, Snackbar, Toolbar } from "@mui/material";
 import NavigationLoader from "@/components/Loaders/NavigationLoader";
-import { CartItem, addItem, cartItems, removeItem } from "@/lib/api/cart";
+import {
+  CartItem,
+  addItem,
+  cartItems,
+  removeItem,
+  removeItemCompletely,
+} from "@/lib/api/cart";
 import {
   CartManager,
   ShoppingCartContext,
@@ -35,6 +41,12 @@ export default function RootLayout({
   const [alertSeverity, setAlertSevertity] = useState<AlertColor>("success");
   const [alertDuration, setAlertDuration] = useState(0);
 
+  //--------------------------------------------------------------
+  //
+  //    TODO: SHOULD MIGRATE ALL THIS HANDLERS TO A REDUCER NOW!!!
+  //
+  //--------------------------------------------------------------
+
   async function setAsyncItems() {
     const newItems: CartItem[] | null = await cartItems();
     if (newItems) {
@@ -47,6 +59,7 @@ export default function RootLayout({
       return;
     }
   }
+
   const handleOpenAlert = () => {
     setOpenAlert(true);
   };
@@ -76,6 +89,7 @@ export default function RootLayout({
     items() {
       return items;
     },
+
     async addItem(pid: number, quantity: number) {
       const item: CartItem | undefined = items.find(
         (i) => i.product.id === pid
@@ -85,7 +99,7 @@ export default function RootLayout({
           alertManager.show(
             "No puedes agregar más items de los disponibles",
             "error",
-            5000
+            3000
           );
           return;
         }
@@ -100,6 +114,7 @@ export default function RootLayout({
       );
       setUpdate((current) => !current);
     },
+
     async removeItem(pid: number, quantity: number) {
       const item: CartItem | undefined = items.find(
         (i) => i.product.id === pid
@@ -116,7 +131,7 @@ export default function RootLayout({
           alertManager.show(
             `Solo tienes ${item.quantity} de estos en el carrito!`,
             "error",
-            4000
+            3000
           );
           return;
         }
@@ -124,13 +139,39 @@ export default function RootLayout({
       try {
         await removeItem(pid, quantity);
       } catch {
-        alertManager.show("Ha ocurrido un error", "error", 5000);
+        alertManager.show("Ha ocurrido un error", "error", 3000);
         return;
       }
       alertManager.show(
         quantity === 1
           ? "Se ha removido un item del carrito"
           : `Se han removido ${quantity} items del carrito`,
+        "warning",
+        3000
+      );
+      setUpdate((current) => !current);
+    },
+
+    async removeItemEntirely(prodId: number) {
+      const item: CartItem | undefined = items.find(
+        (i) => i.product.id === prodId
+      );
+      if (!item) {
+        alertManager.show(
+          "No puedes eliminar algo que no tienes",
+          "error",
+          3000
+        );
+        return;
+      }
+      try {
+        await removeItemCompletely(prodId);
+      } catch {
+        alertManager.show("Ha ocurrido un error", "error", 3000);
+        return;
+      }
+      alertManager.show(
+        `Se han removido un item completamente del carrito`,
         "warning",
         3000
       );
@@ -155,7 +196,7 @@ export default function RootLayout({
                     display: "flex",
                     flexDirection: "column",
                     //  ^^^^ never delete this line,
-                    // cost me like 3 hours of straight
+                    // cost me like 4 hours of straight
                     // debugging
                     position: "relative",
                     minHeight: "100vh",

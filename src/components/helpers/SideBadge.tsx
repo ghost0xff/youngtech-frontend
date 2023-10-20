@@ -1,0 +1,14 @@
+"use client;";
+
+import { Badge, BadgeProps, styled } from "@mui/material";
+
+const SideBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    left: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
+
+export default SideBadge;

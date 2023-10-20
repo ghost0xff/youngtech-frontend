@@ -16,6 +16,7 @@ export interface CartManager {
   items(): CartItem[];
   addItem(prodId: number, quantity: number): Promise<void>;
   removeItem(prodId: number, quantity: number): Promise<void>;
+  removeItemEntirely(prodId: number): Promise<void>;
 }
 
 export const ShoppingCartContext = createContext<CartManager>({
@@ -27,6 +28,7 @@ export const ShoppingCartContext = createContext<CartManager>({
   },
   async addItem(pid: number, quantity: number) {},
   async removeItem(pid: number, quantity: number) {},
+  async removeItemEntirely(pid: number) {},
 });
 
 export const CartMenuDestroyerContext = createContext<MU.MenuDestroyer>({
@@ -117,10 +119,7 @@ export default function ShoppingCartMenu() {
           {empty ? (
             <EmptyShoppingCartMenuList />
           ) : (
-            <ShoppingCartMenuList
-              items={items}
-              onClickRemove={handleClickRemove}
-            />
+            <ShoppingCartMenuList items={items} />
           )}{" "}
         </CartMenuDestroyerContext.Provider>
       </Menu>

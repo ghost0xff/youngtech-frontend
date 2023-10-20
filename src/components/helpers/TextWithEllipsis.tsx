@@ -32,7 +32,7 @@ export default function TextWithEllipsis({
           mt: 0,
           ...sx,
         }}
-        fontSize={12}
+        // fontSize={12}
       >
         {children}
       </Typography>
