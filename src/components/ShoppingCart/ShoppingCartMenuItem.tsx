@@ -2,14 +2,11 @@
 
 import {
   Avatar,
-  Badge,
-  BadgeProps,
-  IconButton,
   ListItemAvatar,
   ListItemText,
   MenuItem,
+  Tooltip,
   Typography,
-  styled,
 } from "@mui/material";
 import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCartOutlined";
 import { Product } from "@/lib/api/product";
