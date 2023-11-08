@@ -20,11 +20,11 @@ import {
 } from "@/components/ShoppingCart/ShoppingCartMenu";
 import { AlertManager, AlertManagerContext } from "@/components/helpers/alert";
 import { AlertColor } from "@mui/material";
-import AppFooter from "@/components/AppFooter/AppFooter";
 
 const roboto = Roboto({
   variable: "--font-roboto",
   weight: ["300", "400", "500", "700"],
+
   subsets: ["latin"],
 });
 
@@ -37,11 +37,11 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   const [alertSeverity, setAlertSevertity] = useState<AlertColor>("success");
   const [alertDuration, setAlertDuration] = useState(0);
 
-  //--------------------------------------------------------------
-  //
+  // --------------------------------------------------------------
+  
   //    TODO: SHOULD MIGRATE ALL THIS HANDLERS TO A REDUCER NOW!!!
-  //
-  //--------------------------------------------------------------
+  
+  // --------------------------------------------------------------
 
   async function setAsyncItems() {
     const newItems: CartItem[] | null = await cartItems();
@@ -178,6 +178,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   useEffect(() => {
     setAsyncItems();
   }, [update]);
+
   return (
     <html lang="en" className={roboto.variable}>
       <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -186,33 +187,33 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           <AuthProvider>
             <AlertManagerContext.Provider value={alertManager}>
               <ShoppingCartContext.Provider value={cartManager}>
-                <NavigationLoader />
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    //  ^^^^ never delete this line,
-                    // cost me like 4 hours of straight
-                    // debugging
-                    position: "relative",
-                    minHeight: "100vh",
-                  }}
-                >
-                  <TopAppBar />
-                  <Box
-                    sx={{
-                      flexGrow: 1,
-                      p: 2.5,
-                    }}
-                  >
-                    <Toolbar sx={{ display: { xs: "flex", sm: "none" } }} />
-                    <Toolbar />
-                    {props.children}
-                  </Box>
-                  {/* <AppFooter /> */}
-                </Box>
+            <NavigationLoader />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                //  ^^^^ never delete this line,
+                // cost me like 4 hours of straight
+                // debugging
+                position: "relative",
+                minHeight: "100vh",
+              }}
+            >
+              <TopAppBar />
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  p: 2.5,
+                }}
+              >
+                <Toolbar sx={{ display: { xs: "flex", sm: "none" } }} />
+                <Toolbar />
+                {props.children}
+              </Box>
+              {/* <AppFooter /> */}
+            </Box>
 
-                <Snackbar
+            <Snackbar
                   open={openAlert}
                   autoHideDuration={alertDuration}
                   onClose={handleCloseAlert}
@@ -226,8 +227,8 @@ export default function RootLayout(props: { children: React.ReactNode }) {
                   >
                     {alertMessage}
                   </Alert>
-                </Snackbar>
-              </ShoppingCartContext.Provider>
+                </Snackbar> 
+             </ShoppingCartContext.Provider>
             </AlertManagerContext.Provider>
           </AuthProvider>
         </ThemeRegistry>
