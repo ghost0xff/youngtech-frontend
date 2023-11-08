@@ -2,7 +2,7 @@
 
 ## Project status
 
-Abandoned and incomplete :'v
+Abandoned and incomplete.
 Main reason of abandonement explained here => https://github.com/samu22cr/youngtech-backend-abandoned
 
 Other reasons....
