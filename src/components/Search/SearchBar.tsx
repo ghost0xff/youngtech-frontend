@@ -115,13 +115,10 @@ export default function SearchBar() {
               onChange={(e) => {
                 const newValue = e.target.value;
                 setInputValue(newValue);
-                const matchingOption = options.find(
-                  (option) =>
-                    // better UX if contains???
-                    // option.name.includes(newValue)
-                    option.name.startsWith(newValue)
-                  // ||
-                  // option.description.startsWith(newValue)
+                const matchingOption = options.find((option) =>
+                  // better UX if contains???
+                  // option.name.includes(newValue)
+                  option.name.startsWith(newValue)
                 );
 
                 if (newValue && matchingOption) {

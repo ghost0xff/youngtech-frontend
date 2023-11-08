@@ -20,21 +20,6 @@ enum CartErrors {
 }
 
 
-// export async function calcTotal(items: CartItem[]): Promise<number> {
-// //   for (let index = 0; index < items.length; index++) {
-//     const item = items[index];
-//     const prod: Product = item.product;
-//     let price = product.price;
-//     if(prod.discountPercentage > 0) {
-//       price -= product.price / 100 * product.discountPercentage
-//     }
-//     total += price * item.quantity;
-//   }
-//   return total;
-// }
-
-
-
 export async function cartItems(): Promise<CartItem[] | null>{
   const session: Session | null = await getSafeServerSession();
   if(session) {

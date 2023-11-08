@@ -1,6 +1,12 @@
 "use client";
 
-import { Fragment, useContext } from "react";
+import {
+  Fragment,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   CartManager,
   ShoppingCartContext,
@@ -13,22 +19,52 @@ import {
   CardContent,
   Divider,
   Link,
-  ListItemSecondaryAction,
   Stack,
   Typography,
 } from "@mui/material";
+import { Order } from "@/lib/api/order";
+import { useRouter } from "next/navigation";
+import CheckoutShippingInfo from "./CheckoutShippingInfo";
+import { SchoolMetadata } from "@/lib/api/school";
 
-export default function CheckoutGrid() {
+type Props = {
+  checkoutData: Order;
+  isSchoolMember: boolean;
+  schoolMetadata: SchoolMetadata;
+};
+
+export type SchoolInfo = SchoolMetadata & {
+  isSchoolMember: boolean;
+};
+export const SchoolInfoContext = createContext<SchoolInfo>({
+  technicalSubjects: [],
+  academicSubjects: [],
+  groups: [],
+  isSchoolMember: false,
+  schoolId: -1,
+});
+
+export default function CheckoutGrid({
+  checkoutData,
+  isSchoolMember,
+  schoolMetadata,
+}: Props) {
   const cartManager: CartManager = useContext(ShoppingCartContext);
   const items: CartItem[] = cartManager.items();
+  const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  }, [items]);
+
   return (
     <>
       {items.length > 0 ? (
-        <Grid container spacing={3}>
-          <Grid xs={12} lg={4}>
+        <Grid container spacing={3} justifyContent={"flex-end"}>
+          <Grid xs={12} md={6} lg={4}>
             <CheckoutItems />
           </Grid>
-          <Grid xs={12} lg={4}>
+          <Grid xs={12} md={6} lg={4}>
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h6">Información de Pago</Typography>
@@ -81,19 +117,45 @@ export default function CheckoutGrid() {
                   })}
                 </Stack>
                 <Divider />
-                <Stack marginTop={1}>
-                  <Typography>Subtotal: {"000"}</Typography>
-                  <Typography>Total: 19999</Typography>
+                <Stack
+                  marginTop={1}
+                  direction={"row"}
+                  justifyContent={"space-between"}
+                >
+                  <Stack>
+                    <Typography component={"div"} variant="caption">
+                      Descuento:{" "}
+                      <Typography
+                        display={"inline-block"}
+                        variant="inherit"
+                        color="error.main"
+                      >
+                        ₡{checkoutData.totalDiscountCurrency}
+                      </Typography>
+                    </Typography>
+                    <Typography component={"div"} variant="caption">
+                      IVA:{" "}
+                      <Typography display={"inline-block"} variant="inherit">
+                        {checkoutData.ivaPercentage}%
+                      </Typography>
+                    </Typography>
+                  </Stack>
+                  <Typography component={"div"} fontWeight={600}>
+                    Total:{" "}
+                    <Typography display={"inline-block"} color="success.main">
+                      ₡{checkoutData.total}
+                    </Typography>
+                  </Typography>
                 </Stack>
               </CardContent>
             </Card>
           </Grid>
-          <Grid xs={12} lg={4}>
-            <Card variant="outlined">
-              <CardContent>
-                <Typography>Shipping Info</Typography>
-              </CardContent>
-            </Card>
+          <Grid xs={12} md={6} lg={4}>
+            <SchoolInfoContext.Provider
+              value={{ ...schoolMetadata, isSchoolMember }}
+            >
+              <CheckoutShippingInfo checkoutData={checkoutData} />
+            </SchoolInfoContext.Provider>
           </Grid>
         </Grid>
       ) : (

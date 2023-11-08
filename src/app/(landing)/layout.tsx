@@ -28,11 +28,7 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout(props: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [update, setUpdate] = useState(false);
   const [productIds, setProductIds] = useState<number[]>([]);
@@ -211,7 +207,7 @@ export default function RootLayout({
                   >
                     <Toolbar sx={{ display: { xs: "flex", sm: "none" } }} />
                     <Toolbar />
-                    {children}
+                    {props.children}
                   </Box>
                   {/* <AppFooter /> */}
                 </Box>

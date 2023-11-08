@@ -58,13 +58,13 @@ export default function CheckoutItem({ item }: Props) {
                 <TextWithEllipsis lines={1} variant="caption">
                   Cantidad: {item.quantity}
                 </TextWithEllipsis>
-                <TextWithEllipsis
+                {/* <TextWithEllipsis
                   lines={1}
                   variant="caption"
-                  // sx={{ color: "success.main" }}
+                  sx={{ color: "success.main" }}
                 >
                   ₡{item.product.price} c/u
-                </TextWithEllipsis>
+                </TextWithEllipsis> */}
               </Stack>
             </Stack>
           </Stack>
