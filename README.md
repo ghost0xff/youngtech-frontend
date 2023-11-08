@@ -21,3 +21,8 @@ abstractions of all this npm packages actually work.
 
 I'm probably going to switch to Nextjs + TailwindCSS or even try out
 other none-react (or even none-js) tools, like Svelte or HTMX
+
+
+NOTE: Some features of the actual project might not even work
+since project isn't going to be mantained and the API of the 
+backend will probably change
