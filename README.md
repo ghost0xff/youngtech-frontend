@@ -1,11 +1,16 @@
 # Abandoned -  YougTech Frontend (E-commerce)
- 
-Project is incomplete :'v
 
-This was a frontend for this project => https://github.com/samu22cr/youngtech-backend
-but now is deprecated, since I decided to rewrite all the frontend.
+## Project status
 
-Reason why I'm abandoning this project is because of the frontend tech stack
+Abandoned and incomplete :'v
+Main reason of abandonement explained here => https://github.com/samu22cr/youngtech-backend-abandoned
+
+Other reasons....
+
+This was a frontend for this project => https://github.com/samu22cr/youngtech-backend-abandoned
+but now is deprecated, since I decided to rewrite all this in the future.
+
+One reason why I'm abandoning this project is because of the frontend tech stack
 I chose when I started this project. I chose to use Nextjs + MUI because
 I had no idea how bad of a combination that was, it was a bad idea because
 MUI is pretty client-side focused and Nextjs's App Router (which I was using)
@@ -25,4 +30,4 @@ other none-react (or even none-js) tools, like Svelte or HTMX
 
 NOTE: Some features of the actual project might not even work
 since project isn't going to be mantained and the API of the 
-backend will probably change
+backend will probably change if it even exists
