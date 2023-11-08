@@ -1,5 +1,5 @@
-# Abandoned: Frontend for YoungTech E-commerce
-
+# Abandoned -  YougTech Frontend (E-commerce)
+ 
 Project is incomplete :'v
 
 This was a frontend for this project => https://github.com/samu22cr/youngtech-backend
