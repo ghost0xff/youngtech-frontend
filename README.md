@@ -2,8 +2,7 @@
 
 ## Project status
 
-Abandoned and incomplete.
-Main reason of abandonement explained here => https://github.com/samu22cr/youngtech-backend-abandoned
+Abandoned and incomplete (here's why -> https://github.com/samu22cr/youngtech-backend-abandoned)
 
 Other reasons....
 
