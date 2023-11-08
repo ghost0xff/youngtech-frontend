@@ -1,4 +1,4 @@
-# Deprecated Frontend for YoungTech E-commerce
+# Abandoned: Frontend for YoungTech E-commerce
 
 Project is incomplete :'v
 
