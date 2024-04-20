@@ -1,4 +1,4 @@
-# Abandoned -  YougTech Frontend (E-commerce)
+# ⚠️ Abandoned -  YougTech Frontend (E-commerce)
 
 ## Project status
 
